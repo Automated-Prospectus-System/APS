@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check Eligibility — APS</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#3b82f6">
+<link rel="stylesheet" href="/assets/css/global.css">
+<style>
+.qual-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:4px}
+@media(max-width:640px){.qual-grid{grid-template-columns:repeat(2,1fr)}}
+.qual-card{
+  padding:12px;border-radius:var(--r-md);
+  border:2px solid var(--border-light);background:rgba(15,31,61,.5);
+  cursor:pointer;transition:all var(--t);text-align:center;
+}
+.qual-card:hover{border-color:var(--primary);background:rgba(59,130,246,.06)}
+.qual-card.active{border-color:var(--primary);background:rgba(59,130,246,.1);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.qual-card-icon{font-size:1.4rem;margin-bottom:6px}
+.qual-card-name{font-size:.82rem;font-weight:700;color:var(--text)}
+.qual-card-desc{font-size:.7rem;color:var(--text-faint);margin-top:2px}
+.inst-filter{display:flex;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.inst-toggle{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 16px;border-radius:var(--r-md);
+  border:1px solid var(--border-light);background:rgba(15,31,61,.5);
+  cursor:pointer;transition:all var(--t);font-size:.85rem;font-weight:600;
+  color:var(--text-muted);user-select:none;
+}
+.inst-toggle.active{border-color:var(--primary);color:var(--text);background:rgba(59,130,246,.1)}
+.inst-toggle .dot{width:8px;height:8px;border-radius:50%}
+.subjects-container{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.add-subj-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px;border:2px dashed var(--border-light);
+  border-radius:var(--r-md);color:var(--text-faint);
+  cursor:pointer;transition:all var(--t);font-size:.85rem;font-weight:600;
+  background:none;width:100%;font-family:var(--font-ui);
+}
+.add-subj-btn:hover{border-color:var(--primary);color:var(--primary-light);background:rgba(59,130,246,.04)}
+.notice-box{display:flex;gap:10px;padding:12px 14px;border-radius:var(--r-md);font-size:.82rem}
+.notice-box.blue{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--primary-light)}
+.notice-box.amber{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent)}
+.subj-row{display:grid;grid-template-columns:28px 1fr 120px 32px;gap:10px;align-items:center;padding:10px 12px;background:rgba(15,31,61,.5);border:1px solid var(--border-light);border-radius:var(--r-md);transition:all var(--t);animation:cardReveal .25s ease both}
+.subj-row:hover{border-color:var(--border)}
+.subj-num{width:26px;height:26px;background:rgba(59,130,246,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--primary-light)}
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="/assets/img/logo-icon.svg" style="width:36px;height:36px;flex-shrink:0">
+      <div class="logo-text"><span class="logo-name">APS</span><span class="logo-tag">Prospectus System</span></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Main</div>
+      <a href="/dashboard.html" class="nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard
+      </a>
+      <a href="/eligibility.html" class="nav-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Check Eligibility
+      </a>
+      <a href="/programmes.html" class="nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Browse Programmes
+      </a>
+      <a href="/results.html" class="nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>My Results
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Account</div>
+      <a href="/profile.html" class="nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>My Profile
+      </a>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="user-chip" id="userChip">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="user-info"><div class="user-name" id="userName">Guest</div><div class="user-role">student</div></div>
+        <button class="logout-btn" onclick="doLogout()" title="Sign out">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+  <button class="sidebar-toggle" onclick="toggleSidebar()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1 class="page-title grad-text">Check Your Eligibility</h1>
+      <p class="page-subtitle">Enter your LGCSE (or equivalent) results to instantly discover which university programmes you qualify for.</p>
+    </div>
+
+    <div style="max-width:760px">
+      <!-- Step 1: Qualification -->
+      <div class="card mb-4" style="margin-bottom:20px;animation:cardReveal .4s ease both">
+        <div class="card-header"><span class="card-title">1. Qualification Type</span></div>
+        <div class="card-body">
+          <div class="qual-grid">
+            <div class="qual-card active" data-qual="LGCSE" onclick="setQual(this)">
+              <div class="qual-card-icon">🇱🇸</div>
+              <div class="qual-card-name">LGCSE</div>
+              <div class="qual-card-desc">Lesotho — All 3 universities</div>
+            </div>
+            <div class="qual-card" data-qual="NSC" onclick="setQual(this)">
+              <div class="qual-card-icon">🇿🇦</div>
+              <div class="qual-card-name">NSC</div>
+              <div class="qual-card-desc">South Africa — Botho only</div>
+            </div>
+            <div class="qual-card" data-qual="BGCSE" onclick="setQual(this)">
+              <div class="qual-card-icon">🇧🇼</div>
+              <div class="qual-card-name">BGCSE</div>
+              <div class="qual-card-desc">Botswana — Botho only</div>
+            </div>
+            <div class="qual-card" data-qual="NSSC" onclick="setQual(this)">
+              <div class="qual-card-icon">🇳🇦</div>
+              <div class="qual-card-name">NSSC</div>
+              <div class="qual-card-desc">Namibia — Botho only</div>
+            </div>
+          </div>
+          <div id="qualNotice" class="notice-box amber mt-3 hidden">
+            <span>⚠️</span>
+            <span>For non-LGCSE qualifications, only <strong>Botho University</strong> programmes will be checked.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Institutions -->
+      <div class="card mb-4" style="margin-bottom:20px;animation:cardReveal .45s ease both">
+        <div class="card-header"><span class="card-title">2. Institutions to Check</span></div>
+        <div class="card-body">
+          <div class="inst-filter">
+            <div class="inst-toggle active" data-inst="NUL" onclick="toggleInst(this)">
+              <div class="dot" style="background:#3b82f6"></div> NUL
+            </div>
+            <div class="inst-toggle active" data-inst="LP" onclick="toggleInst(this)">
+              <div class="dot" style="background:#f59e0b"></div> Lerotholi Polytechnic
+            </div>
+            <div class="inst-toggle active" data-inst="BU" onclick="toggleInst(this)">
+              <div class="dot" style="background:#10b981"></div> Botho University
+            </div>
+          </div>
+          <div class="form-hint mt-2">Select which institutions to include in the check. Leave all selected for a full comparison.</div>
+        </div>
+      </div>
+
+      <!-- Step 3: Subjects -->
+      <div class="card" style="animation:cardReveal .5s ease both">
+        <div class="card-header">
+          <span class="card-title">3. Your Subject Grades</span>
+          <button class="btn btn-sm btn-ghost" onclick="loadSample()" title="Load example grades">Load Example</button>
+        </div>
+        <div class="card-body">
+          <!-- Feature 1: Draft banner (hidden by default) -->
+          <div class="draft-banner hidden" id="draftBanner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <span>You have a saved draft from your last session.</span>
+            <div class="draft-banner-actions">
+              <button class="btn btn-primary btn-sm" onclick="restoreDraft()">Restore</button>
+              <button class="btn btn-ghost btn-sm" onclick="dismissDraft()">Dismiss</button>
+            </div>
+          </div>
+
+          <!-- Feature 2: Animated APS Ring -->
+          <div class="aps-ring-wrap" id="apsPreview">
+            <svg class="aps-svg-ring" id="apsSvg" width="90" height="90" viewBox="0 0 90 90">
+              <circle class="aps-ring-track" cx="45" cy="45" r="36" stroke-width="8"/>
+              <circle class="aps-ring-fill" id="apsRingFill" cx="45" cy="45" r="36" stroke-width="8"
+                stroke="#3b82f6"
+                stroke-dasharray="226.2"
+                stroke-dashoffset="226.2"
+                transform="rotate(-90 45 45)"/>
+              <text class="aps-ring-num" id="apsSvgNum" x="45" y="43" font-size="18" fill="var(--text)">0</text>
+              <text class="aps-ring-lbl" x="45" y="57" font-size="8" fill="var(--text-faint)" text-anchor="middle">APS</text>
+            </svg>
+            <div class="aps-ring-info">
+              <div class="aps-ring-headline">NUL APS Score (best 6 subjects)</div>
+              <div class="aps-ring-value" id="apsScore">0</div>
+              <div class="aps-ring-desc" id="apsDesc">Add at least 6 subjects to see your APS score.</div>
+              <div class="aps-ring-bar"><div class="aps-ring-bar-fill" id="apsBarFill" style="width:0%;background:var(--primary)"></div></div>
+            </div>
+          </div>
+
+          <div id="subjectsContainer" class="subjects-container"></div>
+          <div class="dup-warning hidden" id="dupWarning">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Duplicate subject detected — remove the duplicate to continue
+          </div>
+
+          <button class="add-subj-btn" onclick="addSubjectRow()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Subject
+          </button>
+
+          <div class="notice-box blue mt-3">
+            <span>💡</span>
+            <span>NUL requires a minimum of <strong>6 subjects</strong>. LP requires <strong>6 subjects</strong>. Botho requires <strong>5 subjects</strong>. English is compulsory for all.</span>
+          </div>
+
+          <div id="submitAlert" class="alert error hidden mt-3">
+            <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="submitAlertMsg"></span>
+          </div>
+
+          <button class="btn btn-primary btn-full btn-lg mt-4" id="checkBtn" onclick="runCheck()" style="margin-top:20px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span class="btn-lbl">Check My Eligibility</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+<script type="module">
+import { isLoggedIn, getUser, logout, checkEligibility, showToast } from '/assets/js/api.js';
+import { initAllFeatures } from '/assets/js/features.js';
+
+window.toggleSidebar = () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+};
+window.doLogout = () => logout();
+
+const user = getUser();
+if (user) {
+  document.getElementById('userName').textContent = user.full_name || 'User';
+  const av = document.getElementById('userAvatar');
+  if (user.profile_photo_url) av.innerHTML = `<img src="${user.profile_photo_url}">`;
+  else av.textContent = (user.full_name || 'U')[0].toUpperCase();
+}
+
+initAllFeatures();
+
+// All LGCSE/Lesotho high school subjects
+const SUBJECTS = [
+  { id: 'ENG',        name: 'English Language',                group: '📚 Core' },
+  { id: 'SESO',       name: 'Sesotho',                         group: '📚 Core' },
+  { id: 'MATH',       name: 'Mathematics',                     group: '📚 Core' },
+  { id: 'LIT',        name: 'Literature in English',           group: '📚 Core' },
+  { id: 'BIO',        name: 'Biology',                         group: '🔬 Sciences' },
+  { id: 'CHEM',       name: 'Chemistry',                       group: '🔬 Sciences' },
+  { id: 'PHYS',       name: 'Physics',                         group: '🔬 Sciences' },
+  { id: 'PHYSCI',     name: 'Physical Science',                group: '🔬 Sciences' },
+  { id: 'AGRI',       name: 'Agricultural Science',            group: '🔬 Sciences' },
+  { id: 'ADDMATH',    name: 'Additional Mathematics',          group: '🔬 Sciences' },
+  { id: 'HSOCBIO',    name: 'Human & Social Biology',          group: '🔬 Sciences' },
+  { id: 'ENVSC',      name: 'Environmental Science',           group: '🔬 Sciences' },
+  { id: 'STATS',      name: 'Statistics',                      group: '🔬 Sciences' },
+  { id: 'HIST',       name: 'History',                         group: '🌍 Humanities & Social' },
+  { id: 'GEOG',       name: 'Geography',                       group: '🌍 Humanities & Social' },
+  { id: 'DEVST',      name: 'Development Studies',             group: '🌍 Humanities & Social' },
+  { id: 'RELST',      name: 'Religious Studies',               group: '🌍 Humanities & Social' },
+  { id: 'RELED',      name: 'Religious Education',             group: '🌍 Humanities & Social' },
+  { id: 'SOCST',      name: 'Social Studies',                  group: '🌍 Humanities & Social' },
+  { id: 'FREN',       name: 'French',                          group: '💬 Languages' },
+  { id: 'SETSWANA',   name: 'Setswana',                        group: '💬 Languages' },
+  { id: 'ZULU',       name: 'Zulu',                            group: '💬 Languages' },
+  { id: 'COMM',       name: 'Commerce',                        group: '💼 Business & Commerce' },
+  { id: 'BSTUD',      name: 'Business Studies',                group: '💼 Business & Commerce' },
+  { id: 'ECON',       name: 'Economics',                       group: '💼 Business & Commerce' },
+  { id: 'ACCNT',      name: 'Accounting',                      group: '💼 Business & Commerce' },
+  { id: 'OFCMGT',     name: 'Office Management & Technology',  group: '💼 Business & Commerce' },
+  { id: 'COMPST',     name: 'Computer Studies / ICT',          group: '🔧 Technical & Vocational' },
+  { id: 'DESIGNTECH', name: 'Design & Technology',             group: '🔧 Technical & Vocational' },
+  { id: 'TDRAW',      name: 'Technical Drawing',               group: '🔧 Technical & Vocational' },
+  { id: 'TDARTS',     name: 'Technical Arts',                  group: '🔧 Technical & Vocational' },
+  { id: 'WOODWORK',   name: 'Woodwork',                        group: '🔧 Technical & Vocational' },
+  { id: 'METALWORK',  name: 'Metalwork',                       group: '🔧 Technical & Vocational' },
+  { id: 'BUILDCON',   name: 'Building Construction',           group: '🔧 Technical & Vocational' },
+  { id: 'ARTD',       name: 'Art & Design',                    group: '🎨 Arts & Practical' },
+  { id: 'MUSIC',      name: 'Music',                           group: '🎨 Arts & Practical' },
+  { id: 'PE',         name: 'Physical Education',              group: '🎨 Arts & Practical' },
+  { id: 'FOOD',       name: 'Food & Nutrition / Home Economics', group: '🎨 Arts & Practical' },
+  { id: 'CLOTHING',   name: 'Clothing & Textiles',             group: '🎨 Arts & Practical' },
+];
+
+const GRADES   = ['A*', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
+const NUL_PTS  = { 'A*': 1, A: 2, B: 3, C: 4, D: 5, E: 6, F: 7, G: 8 };
+const CIRC     = 2 * Math.PI * 36; // ring circumference for r=36
+
+let selectedQual = 'LGCSE';
+let rowCount = 0;
+
+function buildSubjectOptions(selectedId = '') {
+  const groups = {};
+  SUBJECTS.forEach(s => { if (!groups[s.group]) groups[s.group] = []; groups[s.group].push(s); });
+  let html = `<option value="">Select subject...</option>`;
+  for (const [grp, items] of Object.entries(groups)) {
+    html += `<optgroup label="${grp}">`;
+    items.forEach(s => { html += `<option value="${s.id}"${s.id === selectedId ? ' selected' : ''}>${s.name}</option>`; });
+    html += `</optgroup>`;
+  }
+  return html;
+}
+
+function buildGradeOptions(selectedGrade = '') {
+  return GRADES.map(g =>
+    `<option value="${g}"${g === selectedGrade ? ' selected' : ''} style="background:var(--surface-2)">${g}</option>`
+  ).join('');
+}
+
+window.addSubjectRow = (subjId = '', grade = '') => {
+  rowCount++;
+  const idx = rowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row';
+  row.id = `srow-${idx}`;
+  row.innerHTML = `
+    <div class="subj-num">${idx}</div>
+    <select class="form-select" id="subj-${idx}" onchange="updateAPS()" style="font-size:.85rem">
+      ${buildSubjectOptions(subjId)}
+    </select>
+    <select class="form-select" id="grade-${idx}" onchange="updateAPS()" style="font-size:.85rem">
+      <option value="">Grade</option>
+      ${buildGradeOptions(grade)}
+    </select>
+    <button class="remove-btn" onclick="removeRow(${idx})" title="Remove">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>`;
+  document.getElementById('subjectsContainer').appendChild(row);
+  updateAPS();
+  updateRowNumbers();
+};
+
+window.removeRow = (idx) => {
+  document.getElementById(`srow-${idx}`)?.remove();
+  updateAPS();
+  updateRowNumbers();
+};
+
+function updateRowNumbers() {
+  document.querySelectorAll('#subjectsContainer .subj-row').forEach((r, i) => {
+    const n = r.querySelector('.subj-num');
+    if (n) n.textContent = i + 1;
+  });
+}
+
+function getSubjects() {
+  const results = [];
+  document.querySelectorAll('#subjectsContainer .subj-row').forEach(r => {
+    const id    = r.id.replace('srow-', '');
+    const subj  = document.getElementById(`subj-${id}`)?.value;
+    const grade = document.getElementById(`grade-${id}`)?.value;
+    if (subj && grade) results.push({ subject_id: subj, grade });
+  });
+  return results;
+}
+
+// ── Feature 3: Duplicate detection ──────────────────────────
+function checkDuplicates() {
+  const rows = document.querySelectorAll('#subjectsContainer .subj-row');
+  const seen = {};
+  rows.forEach(r => {
+    const id   = r.id.replace('srow-', '');
+    const subj = document.getElementById(`subj-${id}`)?.value;
+    if (subj) seen[subj] = (seen[subj] || 0) + 1;
+  });
+  let hasDup = false;
+  rows.forEach(r => {
+    const id   = r.id.replace('srow-', '');
+    const subj = document.getElementById(`subj-${id}`)?.value;
+    if (subj && seen[subj] > 1) { r.classList.add('duplicate'); hasDup = true; }
+    else r.classList.remove('duplicate');
+  });
+  const w = document.getElementById('dupWarning');
+  w.classList.toggle('hidden', !hasDup);
+  return hasDup;
+}
+
+// ── Feature 2: Animated APS ring update ─────────────────────
+window.updateAPS = () => {
+  const subjects = getSubjects();
+  const pts = subjects
+    .filter(s => NUL_PTS[s.grade])
+    .map(s => NUL_PTS[s.grade])
+    .sort((a, b) => a - b)
+    .slice(0, 6);
+  const aps   = pts.reduce((a, b) => a + b, 0);
+  const score = pts.length >= 1 ? aps : 0;
+
+  document.getElementById('apsScore').textContent = score;
+  if (document.getElementById('apsSvgNum')) document.getElementById('apsSvgNum').textContent = score;
+
+  const desc = pts.length < 6
+    ? `Add ${6 - pts.length} more subject${6 - pts.length !== 1 ? 's' : ''} with grades.`
+    : `Based on your best 6 subjects (lower = better for NUL).`;
+  document.getElementById('apsDesc').textContent = desc;
+
+  // Animated ring: lower APS = better = more fill
+  const APS_BEST = 6, APS_WORST = 48;
+  const pct = pts.length >= 6 ? Math.max(0, Math.min(100, Math.round((APS_WORST - score) / (APS_WORST - APS_BEST) * 100))) : 0;
+  const dashoffset = CIRC - (CIRC * pct / 100);
+  const ringFill = document.getElementById('apsRingFill');
+  if (ringFill) {
+    const color = pct > 65 ? '#10b981' : pct > 35 ? '#f59e0b' : pct > 0 ? '#ef4444' : '#3b82f6';
+    ringFill.style.strokeDashoffset = dashoffset;
+    ringFill.style.stroke = color;
+  }
+  const barFill = document.getElementById('apsBarFill');
+  if (barFill) {
+    const barColor = pct > 65 ? 'var(--secondary)' : pct > 35 ? 'var(--accent)' : pct > 0 ? 'var(--danger)' : 'var(--primary)';
+    barFill.style.width = pct + '%';
+    barFill.style.background = barColor;
+  }
+
+  // Feature 1: Auto-save draft
+  saveDraft();
+  // Feature 3: Check duplicates
+  checkDuplicates();
+};
+
+// ── Feature 1: Auto-save & restore draft ────────────────────
+const DRAFT_KEY = 'aps_eligibility_draft';
+
+function saveDraft() {
+  const subjects = getSubjects();
+  if (subjects.length > 0) {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ subjects, qual: selectedQual, ts: Date.now() }));
+  }
+}
+
+window.restoreDraft = () => {
+  try {
+    const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    if (!draft) return;
+    document.getElementById('subjectsContainer').innerHTML = '';
+    rowCount = 0;
+    draft.subjects.forEach(s => addSubjectRow(s.subject_id, s.grade));
+    document.getElementById('draftBanner').classList.add('hidden');
+    showToast('Draft restored!', 'success');
+  } catch {}
+};
+
+window.dismissDraft = () => {
+  localStorage.removeItem(DRAFT_KEY);
+  document.getElementById('draftBanner').classList.add('hidden');
+};
+
+// Check for saved draft on load
+(function checkForDraft() {
+  try {
+    const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    if (draft && draft.subjects?.length > 0) {
+      const age = (Date.now() - draft.ts) / 3600000;
+      if (age < 48) document.getElementById('draftBanner').classList.remove('hidden');
+      else localStorage.removeItem(DRAFT_KEY);
+    }
+  } catch {}
+})();
+
+window.setQual = (el) => {
+  document.querySelectorAll('.qual-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  selectedQual = el.dataset.qual;
+  const isLGCSE = selectedQual === 'LGCSE';
+  document.getElementById('qualNotice').classList.toggle('hidden', isLGCSE);
+  document.querySelectorAll('.inst-toggle[data-inst="NUL"], .inst-toggle[data-inst="LP"]').forEach(t => {
+    t.style.opacity = isLGCSE ? '1' : '.4';
+    t.style.pointerEvents = isLGCSE ? '' : 'none';
+    if (!isLGCSE) t.classList.remove('active');
+    else t.classList.add('active');
+  });
+};
+
+window.toggleInst = (el) => el.classList.toggle('active');
+
+// ── Fixed sample data (correct subject IDs) ─────────────────
+window.loadSample = () => {
+  document.getElementById('subjectsContainer').innerHTML = '';
+  rowCount = 0;
+  const sample = [
+    { s: 'ENG',  g: 'B' }, { s: 'SESO', g: 'A' }, { s: 'MATH', g: 'C' },
+    { s: 'BIO',  g: 'B' }, { s: 'CHEM', g: 'C' }, { s: 'PHYS', g: 'D' },
+    { s: 'HIST', g: 'B' }, { s: 'GEOG', g: 'A' }
+  ];
+  sample.forEach(({ s, g }) => addSubjectRow(s, g));
+  showToast('Sample grades loaded', 'info');
+};
+
+window.runCheck = async () => {
+  const subjects  = getSubjects();
+  const alertEl   = document.getElementById('submitAlert');
+  const alertMsg  = document.getElementById('submitAlertMsg');
+  alertEl.classList.add('hidden');
+
+  if (checkDuplicates()) {
+    alertEl.classList.remove('hidden');
+    alertMsg.textContent = 'Please remove duplicate subjects before checking.';
+    return;
+  }
+
+  if (subjects.length < 5) {
+    alertEl.classList.remove('hidden');
+    alertMsg.textContent = `Please add at least 5 subjects with grades (you have ${subjects.length}).`;
+    return;
+  }
+
+  const activeInsts = [...document.querySelectorAll('.inst-toggle.active')].map(t => t.dataset.inst);
+  const instFilter  = activeInsts.length === 3 ? null : (activeInsts.length ? activeInsts : null);
+
+  const btn = document.getElementById('checkBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  try {
+    const res = await checkEligibility(subjects, selectedQual, instFilter);
+    if (res?.success && res.session_token) {
+      localStorage.removeItem(DRAFT_KEY); // clear draft on success
+      window.location.href = `/results.html?session=${res.session_token}`;
+    } else {
+      alertEl.classList.remove('hidden');
+      alertMsg.textContent = res?.message || 'Could not run check. Please try again.';
+    }
+  } catch (err) {
+    alertEl.classList.remove('hidden');
+    alertMsg.textContent = err.message || 'Network error. Please try again.';
+  } finally {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+};
+
+// Init with 6 default empty rows
+[1,2,3,4,5,6].forEach(() => addSubjectRow());
+</script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "APS — Automatic Prospectus & Eligibility System",
+  "short_name": "APS",
+  "description": "Check your university eligibility for Lesotho institutions instantly.",
+  "start_url": "/dashboard.html",
+  "display": "standalone",
+  "background_color": "#050b18",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/assets/img/logo-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "en",
+  "scope": "/"
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Programmes — APS</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .compare-header-row{display:grid;gap:1px;background:var(--border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:1.25rem}
+    .compare-col-header{background:var(--surface);padding:1.5rem;text-align:center}
+    .compare-inst-name{font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;color:var(--primary);font-weight:700;margin-bottom:.4rem}
+    .compare-prog-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;line-height:1.3;margin-bottom:.5rem}
+    .compare-faculty{font-size:.8rem;color:var(--text-dim)}
+    .compare-table{width:100%;border-collapse:collapse;border-radius:var(--radius-xl);overflow:hidden}
+    .compare-table th{background:rgba(59,130,246,.08);border:1px solid var(--border);padding:.75rem 1rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);text-align:left;position:sticky;left:0;z-index:1;min-width:140px}
+    .compare-table td{background:var(--surface);border:1px solid var(--border);padding:.75rem 1rem;text-align:center;font-size:.88rem;vertical-align:middle}
+    .compare-table tr:hover td{background:rgba(255,255,255,.02)}
+    .compare-table td.winner{background:rgba(16,185,129,.06);font-weight:700;color:var(--success)}
+    .compare-table td.loser{opacity:.6}
+    .table-wrap{overflow-x:auto;border-radius:var(--radius-xl)}
+    .badge-compare{display:inline-block;padding:.25rem .6rem;border-radius:999px;font-size:.75rem;font-weight:600}
+    .badge-compare.yes{background:rgba(16,185,129,.12);color:var(--success)}
+    .badge-compare.no{background:rgba(239,68,68,.1);color:var(--danger)}
+    .prog-action-row{display:flex;gap:.75rem;justify-content:center;padding:.75rem 0}
+    .no-data{text-align:center;padding:4rem 2rem;color:var(--text-dim)}
+    @media(max-width:700px){.compare-table th{min-width:110px}}
+  </style>
+</head>
+<body>
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div id="toast-container"></div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-logo">
+    <img src="/assets/img/logo-icon.svg" style="width:38px;height:38px;flex-shrink:0">
+    <div><div class="logo-text">APS</div><div class="logo-sub">Eligibility System</div></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="dashboard.html" class="nav-link"><i class="fa fa-tachometer-alt nav-icon"></i>Dashboard</a>
+    <a href="eligibility.html" class="nav-link"><i class="fa fa-check-circle nav-icon"></i>Check Eligibility</a>
+    <a href="results.html" class="nav-link"><i class="fa fa-chart-bar nav-icon"></i>Results</a>
+    <div class="nav-section-label">Explore</div>
+    <a href="universities.html" class="nav-link"><i class="fa fa-university nav-icon"></i>Universities</a>
+    <a href="programmes.html" class="nav-link"><i class="fa fa-book-open nav-icon"></i>Programmes</a>
+    <div class="nav-section-label">Account</div>
+    <a href="profile.html" class="nav-link"><i class="fa fa-user nav-icon"></i>Profile</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-ghost w-full" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+  </div>
+</aside>
+<div class="layout">
+  <header class="topbar">
+    <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+    <div class="topbar-title">Compare Programmes</div>
+    <div class="topbar-actions">
+      <button class="btn btn-outline btn-sm" onclick="history.back()"><i class="fa fa-arrow-left"></i> Back</button>
+      <button class="topbar-icon" id="themeToggle"><i class="fa fa-moon"></i></button>
+      <a href="profile.html" class="topbar-avatar" id="topbarAvatar">?</a>
+    </div>
+  </header>
+  <main class="main-content">
+    <div id="loadingState" style="text-align:center;padding:4rem;color:var(--text-dim)">
+      <div class="spinner" style="width:2rem;height:2rem;margin:0 auto 1rem"></div>
+      Loading comparison…
+    </div>
+    <div id="compareContent" style="display:none"></div>
+  </main>
+</div>
+<script type="module">
+import { apiFetch, getUser, clearToken, setTheme, getTheme, showToast, isLoggedIn } from '/assets/js/api.js';
+
+async function init() {
+  const theme=getTheme();document.documentElement.dataset.theme=theme;
+  document.getElementById('themeToggle').querySelector('i').className=theme==='dark'?'fa fa-sun':'fa fa-moon';
+  const user=getUser();
+  if(user){const av=document.getElementById('topbarAvatar');if(user.profile_photo_url)av.innerHTML=`<img src="${user.profile_photo_url}" style="width:32px;height:32px;border-radius:50%;object-fit:cover">`;else av.textContent=(user.full_name||user.email||'?')[0].toUpperCase();}
+  document.getElementById('menuToggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('show')});
+  document.getElementById('sidebar-overlay').addEventListener('click',()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('show')});
+  document.getElementById('themeToggle').addEventListener('click',()=>{const t=getTheme()==='dark'?'light':'dark';setTheme(t);document.documentElement.dataset.theme=t;document.getElementById('themeToggle').querySelector('i').className=t==='dark'?'fa fa-sun':'fa fa-moon'});
+  document.getElementById('logoutBtn').addEventListener('click',()=>{clearToken();window.location.href='/login.html'});
+
+  const ids=new URLSearchParams(location.search).get('ids');
+  if(!ids){showNoData('No programmes selected. <a href="programmes.html" class="link">Browse programmes</a>.');return;}
+  try {
+    const data=await apiFetch(`/programmes/compare?ids=${ids}`);
+    if(!data.success||!data.data.length){showNoData('Could not load programmes.');return;}
+    renderCompare(data.data);
+  } catch(e){showNoData('Failed to load comparison data.');}
+}
+
+function showNoData(msg){
+  document.getElementById('loadingState').style.display='none';
+  document.getElementById('compareContent').style.display='';
+  document.getElementById('compareContent').innerHTML=`<div class="no-data"><div style="font-size:3rem;opacity:.3;margin-bottom:1rem">📊</div><p>${msg}</p></div>`;
+}
+
+function renderCompare(progs){
+  document.getElementById('loadingState').style.display='none';
+  document.getElementById('compareContent').style.display='';
+  const n=progs.length;
+  const cols=`repeat(${n+1},1fr)`;
+  const quals={degree:'🎓 Degree',diploma:'📜 Diploma',certificate:'📋 Certificate',honours:'⭐ Honours'};
+  const entries={direct:'Direct Entry',indirect:'Bridging',rpl:'RPL',odl:'Distance Learning'};
+
+  const headers=progs.map((p,i)=>`
+    <div class="compare-col-header" style="animation:fadeInUp .3s ${i*.1}s ease both">
+      <div class="compare-inst-name">${p.institution_name}</div>
+      <div class="compare-prog-name">${p.programme_name}</div>
+      <div class="compare-faculty">${p.faculty_name}</div>
+    </div>`).join('');
+
+  const rows=[
+    {label:'Qualification',vals:progs.map(p=>quals[p.qualification_type]||p.qualification_type)},
+    {label:'Duration',vals:progs.map(p=>`${p.duration_years} years`),compare:'min'},
+    {label:'Entry Type',vals:progs.map(p=>entries[p.entry_type]||p.entry_type)},
+    {label:'Min. Subjects',vals:progs.map(p=>p.min_subjects_req),compare:'min'},
+    {label:'Local Fee/yr',vals:progs.map(p=>p.fee_local?`M ${Number(p.fee_local).toLocaleString()}`:'N/A'),numVals:progs.map(p=>p.fee_local||Infinity),compare:'min'},
+    {label:'Intl Fee/yr',vals:progs.map(p=>p.fee_intl?`M ${Number(p.fee_intl).toLocaleString()}`:'N/A'),numVals:progs.map(p=>p.fee_intl||Infinity),compare:'min'},
+    {label:'Portfolio',vals:progs.map(p=>p.has_portfolio?'<span class="badge-compare yes">Required</span>':'<span class="badge-compare no">Not required</span>'),raw:true},
+    {label:'Interview',vals:progs.map(p=>p.has_interview?'<span class="badge-compare yes">Required</span>':'<span class="badge-compare no">Not required</span>'),raw:true},
+    {label:'Gateway Prog.',vals:progs.map(p=>p.is_gateway_prog?'<span class="badge-compare yes">Yes</span>':'<span class="badge-compare no">No</span>'),raw:true},
+    {label:'Min APS',vals:progs.map(p=>p.threshold?.aps_min??'N/A'),numVals:progs.map(p=>p.threshold?.aps_min??Infinity),compare:'min'},
+  ];
+
+  const tableRows=rows.map(row=>{
+    let winIdx=-1;
+    if(row.compare==='min'){const nums=row.numVals||row.vals.map(v=>parseFloat(v)||Infinity);const minV=Math.min(...nums);winIdx=nums.indexOf(minV);}
+    const tds=row.vals.map((v,i)=>{
+      const cls=row.compare?(i===winIdx?'winner':row.vals.every(x=>x===row.vals[0])?'':'loser'):'';
+      return `<td class="${cls}">${row.raw?v:v}</td>`;
+    }).join('');
+    return `<tr><th>${row.label}</th>${tds}</tr>`;
+  }).join('');
+
+  const actionRow=`<tr><th>Actions</th>${progs.map(p=>`<td><div class="prog-action-row"><a href="programmes.html?id=${p.programme_id}" class="btn btn-outline btn-sm"><i class="fa fa-info-circle"></i> Details</a><button class="btn btn-ghost btn-sm" onclick="window._save('${p.programme_id}')"><i class="fa fa-heart"></i></button></div></td>`).join('')}</tr>`;
+
+  document.getElementById('compareContent').innerHTML=`
+    <div style="display:grid;grid-template-columns:140px ${progs.map(()=>'1fr').join(' ')};gap:1px;background:var(--border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:1.25rem;animation:fadeInUp .3s ease">
+      <div style="background:var(--bg);padding:1.5rem;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em">Programme</div>
+      ${headers}
+    </div>
+    <div class="table-wrap" style="animation:fadeInUp .3s .15s ease both">
+      <table class="compare-table">
+        <colgroup><col style="min-width:140px">${progs.map(()=>'<col>').join('')}</colgroup>
+        <tbody>${tableRows}${actionRow}</tbody>
+      </table>
+    </div>`;
+
+  window._save=async id=>{
+    if(!isLoggedIn()){window.location.href='/login.html';return;}
+    try{await apiFetch(`/users/saved/${id}`,{method:'POST'});showToast('Saved!','success')}catch{showToast('Could not save.','error')}
+  };
+}
+
+init();
+</script>
+</body>
+</html>

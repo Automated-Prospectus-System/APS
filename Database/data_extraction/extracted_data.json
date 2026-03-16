@@ -1,0 +1,1574 @@
+{
+  "Printable-Prospectus-2025-2026": [
+    {
+      "name": "Nursing",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "Mathematics",
+        "English",
+        "Science",
+        "Biology",
+        "Geography"
+      ],
+      "subject_requirements": {
+        "Science": "D",
+        "Biology": "A",
+        "Chemistry": "A",
+        "Physics": "A",
+        "Accounting": "A",
+        "Government": "D"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "for entry into the Bachelor of Nursing Science ODL Programme, applicants must have a:   \n\uf0b7 Diploma in Nursing or equivalent.  \n\uf0b7 Minimum of two (2) years registration with Lesotho Nursing Council.  \n\uf0b7 Letter of permission to study from employer for tho se currently working.  \n\uf0b7 Midwifery qualification is compulsory for those who  want to major in Community Health and \nPrimary Health Care Nursing. \n \nCareer Opportunities : Can establish and run own clinics (Private Practi ce), Manage Health Centr",
+      "description": "Bachelor of Nursing Science is offered as an Open a nd Distance Learning (ODL) Programme housed at"
+    },
+    {
+      "name": "Education",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Education"
+    },
+    {
+      "name": "Science",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Science": "C"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "COSC  -  Cambridge Overseas Senior"
+    },
+    {
+      "name": "Education",
+      "qualification_type": "Certificate",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate of Education"
+    },
+    {
+      "name": "Secondary Education",
+      "qualification_type": "Certificate",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate of Secondary Education"
+    },
+    {
+      "name": "Laws",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Law",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Maths  -  Mathematics"
+    },
+    {
+      "name": "Lesotho shall normally be of a minimum of",
+      "qualification_type": "Bachelor",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor\u2019s Degree at the National Unive rsity of Lesotho shall normally be of a minimum of"
+    },
+    {
+      "name": "Science in Agriculture,",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Agriculture,"
+    },
+    {
+      "name": "Sci ence in Agriculture with specialized Programmes and",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Sci ence in Agriculture with specialized Programmes and"
+    },
+    {
+      "name": "Agriculture, Agricultural Education, For estry and Resource Management, Home",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Agriculture, Agricultural Education, For estry and Resource Management, Home"
+    },
+    {
+      "name": "Science in Agriculture",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Agriculture"
+    },
+    {
+      "name": "Science in Agricultural Economics",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Agricultural Economics"
+    },
+    {
+      "name": "Science in Consumer Science",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "Mathematics",
+        "English",
+        "Science",
+        "Biology"
+      ],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "To be admitted into Year 1, applicants must",
+      "description": "Bachelor of Science in Consumer Science"
+    },
+    {
+      "name": "S cience in Agriculture in the following areas of",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Agriculture",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of S cience in Agriculture in the following areas of"
+    },
+    {
+      "name": "Science in Range Resources and Ecology Management",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "To be admitted into Year 2, applicants must",
+      "description": "Bachelor of Science in Range Resources and Ecology Management"
+    },
+    {
+      "name": "Agricultu re, Agricultural Education, Forestry and",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Agricultu re, Agricultural Education, Forestry and"
+    },
+    {
+      "name": "Agric ulture,",
+      "qualification_type": "Diploma",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Agric ulture,"
+    },
+    {
+      "name": "Forestry and Resource",
+      "qualification_type": "Diploma",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Forestry and Resource"
+    },
+    {
+      "name": "Agricultural Education int o specialized Agriculture programmes",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Agricultural Education int o specialized Agriculture programmes"
+    },
+    {
+      "name": "SCIENCE IN AGRICULTURE",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Government": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF SCIENCE IN AGRICULTURE"
+    },
+    {
+      "name": "SCIENCE IN RANGE RESOURCES AND ECOLOGY MA NAGEMENT",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF SCIENCE IN RANGE RESOURCES AND ECOLOGY MA NAGEMENT"
+    },
+    {
+      "name": "SCIENCE IN CONSUMER SCIENCES",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Government": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF SCIENCE IN CONSUMER SCIENCES"
+    },
+    {
+      "name": "Education",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Education"
+    },
+    {
+      "name": "Special Education",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Special Education"
+    },
+    {
+      "name": "EDUCATION",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF EDUCATION"
+    },
+    {
+      "name": "SPECIAL EDUCATION",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF SPECIAL EDUCATION"
+    },
+    {
+      "name": "science and mathematics",
+      "qualification_type": "Certificate",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A",
+        "Science": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate (STC) from LCE holde r with majors in science and mathematics"
+    },
+    {
+      "name": "Science in Nursing and Midwifery",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Nursing and Midwifery"
+    },
+    {
+      "name": "Public Health, Community Health, Maternal and Child Health, Medical",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma into Orthopaedic  Nursing, Psychiatric Mental Health Nursing,"
+    },
+    {
+      "name": "Nursing",
+      "qualification_type": "Diploma",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma levels or Assistant Lecturers.  Can purs ue Masters and Doctoral degrees in Nursing"
+    },
+    {
+      "name": "Pharmacy Program",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Pharmacy Program"
+    },
+    {
+      "name": "Pharmaceutical Technology with a minim um of a pass with credit OR",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Biology": "A",
+        "Chemistry": "A",
+        "Physics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Pharmaceutical Technology with a minim um of a pass with credit OR"
+    },
+    {
+      "name": "Chemistry, Biology and either Mathematics or Physic s OR",
+      "qualification_type": "Certificate",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Biology": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate of Education examina tion with a minimum aggregate of 9 in"
+    },
+    {
+      "name": "related work experience as",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 2,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "supported by work reference letters/portfolio."
+    },
+    {
+      "name": "Environmental Health or equivalent OR",
+      "qualification_type": "Diploma",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Environmental Health or equivalent OR"
+    },
+    {
+      "name": "Science degree from institutions recogn ized by Council on Higher Education",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Science": "D"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science degree from institutions recogn ized by Council on Higher Education"
+    },
+    {
+      "name": "Science in Nutrition programme is uniqu e and is divided into human nutrition and food",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Nutrition programme is uniqu e and is divided into human nutrition and food"
+    },
+    {
+      "name": "Science degree from institutions recogn ized by the Council on Higher Education",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Science": "D",
+        "Government": "D"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science degree from institutions recogn ized by the Council on Higher Education"
+    },
+    {
+      "name": "higher",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualifications fro m other institutions of higher"
+    },
+    {
+      "name": "higher",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 4,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualifications f rom other institutions of higher"
+    },
+    {
+      "name": "higher",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 4,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualifications fro m other institutions of higher"
+    },
+    {
+      "name": "higher",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualifications fro m other institutions of higher"
+    },
+    {
+      "name": "higher",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualifications fro m other institutions of higher"
+    },
+    {
+      "name": "Mass Communication, Journalism,",
+      "qualification_type": "Diploma",
+      "field_of_study": "Law",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Mass Communication, Journalism,"
+    },
+    {
+      "name": "LAWS",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Law",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": ""
+    },
+    {
+      "name": "PROFICIENCY IN INSURANCE",
+      "qualification_type": "Certificate",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "CERTIFICATE OF PROFICIENCY IN INSURANCE"
+    },
+    {
+      "name": "Insurance i s a",
+      "qualification_type": "Certificate",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate of Proficiency (COP) in Insurance i s a"
+    },
+    {
+      "name": "Secondary Education",
+      "qualification_type": "Certificate",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate of Secondary Education"
+    },
+    {
+      "name": "Science in Computer Science",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Computer Science"
+    },
+    {
+      "name": "Science in Statistics",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Statistics"
+    },
+    {
+      "name": "Science in Information Systems",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Information Systems"
+    },
+    {
+      "name": "Science in Human Geography",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Human Geography"
+    },
+    {
+      "name": "Urban and Regional Planning",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Urban and Regional Planning"
+    },
+    {
+      "name": "the Science subjects from other",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualificati ons in the Science subjects from other"
+    },
+    {
+      "name": "Statistics, Mathematical",
+      "qualification_type": "Diploma",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualificatio ns in Statistics, Mathematical"
+    },
+    {
+      "name": "Statistics, Mathematical",
+      "qualification_type": "Diploma",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualificatio ns in Statistics, Mathematical"
+    },
+    {
+      "name": "Statistics, Mathematical",
+      "qualification_type": "Diploma",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualificatio ns in Statistics, Mathematical"
+    },
+    {
+      "name": "Geography or other related fields, from other",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualificatio ns in Geography or other related fields, from other"
+    },
+    {
+      "name": "Science in Human Geo graphy degree, applicants must",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "Mathematics",
+        "English",
+        "Science",
+        "Geography"
+      ],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Human Geo graphy degree, applicants must"
+    },
+    {
+      "name": "Geography or other related",
+      "qualification_type": "Diploma",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma qualificati ons in Geography or other related"
+    },
+    {
+      "name": "COMMERCE",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": ""
+    },
+    {
+      "name": "COMMERCE IN ACCOUNTING AND FINANCE",
+      "qualification_type": "Bachelor",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "English"
+      ],
+      "subject_requirements": {
+        "Accounting": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "The normal entry requirements for applicants shall",
+      "description": "BACHELOR OF COMMERCE IN ACCOUNTING AND FINANCE"
+    },
+    {
+      "name": "COMMERCE IN MARKETING",
+      "qualification_type": "Bachelor",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "English"
+      ],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "The normal entry requirements for applicants shall",
+      "description": "BACHELOR OF COMMERCE IN MARKETING"
+    },
+    {
+      "name": "COMMERCE IN HUMAN RESOURCE MANAGEMENT",
+      "qualification_type": "Bachelor",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "English"
+      ],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF COMMERCE IN HUMAN RESOURCE MANAGEMENT"
+    },
+    {
+      "name": "ARTS IN ECONOMICS",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Arts",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF ARTS IN ECONOMICS"
+    },
+    {
+      "name": "ARTS IN SOCIOLOGY",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF ARTS IN SOCIOLOGY"
+    },
+    {
+      "name": "SOCIAL WORK",
+      "qualification_type": "Bachelor",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "English"
+      ],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "BACHELOR OF SOCIAL WORK"
+    },
+    {
+      "name": "Social Work from an",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Social Work from an"
+    },
+    {
+      "name": "Social Work from",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Social Work from"
+    },
+    {
+      "name": "ARTS IN PUBLIC ADMINISTRATION",
+      "qualification_type": "Bachelor",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "English"
+      ],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "The normal entry requirements for applicants shall",
+      "description": "BACHELOR OF ARTS IN PUBLIC ADMINISTRATION"
+    },
+    {
+      "name": "Public Administration of Lesotho Institu te of Public Administration and Management",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Public Administration of Lesotho Institu te of Public Administration and Management"
+    },
+    {
+      "name": "ARTS IN POLITICAL SCIENCE",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [
+        "English"
+      ],
+      "subject_requirements": {
+        "Science": "D"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "The normal entry requirements for applicants shall",
+      "description": "BACHELOR OF ARTS IN POLITICAL SCIENCE"
+    },
+    {
+      "name": "Public Administration of Lesotho Institu te of Public Administration and Management",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Public Administration of Lesotho Institu te of Public Administration and Management"
+    },
+    {
+      "name": "Public Administration of Lesotho Institu te of Public Administration and Management",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Public Administration of Lesotho Institu te of Public Administration and Management"
+    },
+    {
+      "name": "Public Administration of Lesotho Institu te of Public Administration and Management",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Public Administration of Lesotho Institu te of Public Administration and Management"
+    },
+    {
+      "name": "Statistics from NUL,  equivalent qualification or",
+      "qualification_type": "Certificate",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate in Statistics from NUL,  equivalent qualification or"
+    },
+    {
+      "name": "Statistics from other institutions of hi gher learning recognised by the Council on Higher",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Statistics from other institutions of hi gher learning recognised by the Council on Higher"
+    },
+    {
+      "name": "Secondary Education",
+      "qualification_type": "Certificate",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate of Secondary Education"
+    },
+    {
+      "name": "Adult Education are exem pted from Year One introductory courses",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": ""
+    },
+    {
+      "name": "any related field from NUL or any other University recognised by the Council on",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in any related field from NUL or any other University recognised by the Council on"
+    },
+    {
+      "name": "higher learning",
+      "qualification_type": "Diploma",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diplomas from NUL and other institutions of higher learning"
+    },
+    {
+      "name": "Management from the National Universit y of Lesotho with at least Pass OR",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Management from the National Universit y of Lesotho with at least Pass OR"
+    },
+    {
+      "name": "Business or Management related fie lds from other institutions recognised by",
+      "qualification_type": "Diploma",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Business or Management related fie lds from other institutions recognised by"
+    }
+  ],
+  "Botho-University-2026-Lesotho-Campus-Prospectus": [
+    {
+      "name": "Finance",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce (BCom) in Finance"
+    },
+    {
+      "name": "Accounting",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce (BCom) in Accounting"
+    },
+    {
+      "name": "Risk Management",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce (BCom) in Risk Management"
+    },
+    {
+      "name": "Busine ss Management",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Business Administration (BBA) in Busine ss Management"
+    },
+    {
+      "name": "Health Information Man agementFACULTY OF ENGINEERING AND TECHNOLOGY",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science (BSc) in Health Information Man agementFACULTY OF ENGINEERING AND TECHNOLOGY"
+    },
+    {
+      "name": "Mobile Computing",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science (BSc) in Mobile Computing"
+    },
+    {
+      "name": "Computing",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science (BSc) in Computing"
+    },
+    {
+      "name": "Computer Networking",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science (BSc) in Computer Networking"
+    },
+    {
+      "name": "Data Science",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Education",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science (BSc) in Data Science"
+    },
+    {
+      "name": "Commerce in",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in"
+    },
+    {
+      "name": "Commerce in Finance provides a strong,",
+      "qualification_type": "Bachelor",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in Finance provides a strong,"
+    },
+    {
+      "name": "related field may be given exemptions based on the credit",
+      "qualification_type": "Diploma",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "related field may be given exemptions based on the credit"
+    },
+    {
+      "name": "Commerce in",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in"
+    },
+    {
+      "name": "Commerce in",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in"
+    },
+    {
+      "name": "related field may be given exemptions based on the credit",
+      "qualification_type": "Diploma",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "related field may be given exemptions based on the credit"
+    },
+    {
+      "name": "Commerce in",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in"
+    },
+    {
+      "name": "Commerce in Risk Management offers a",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in Risk Management offers a"
+    },
+    {
+      "name": "related field may be given exemptions based on the credit",
+      "qualification_type": "Diploma",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "related field may be given exemptions based on the credit"
+    },
+    {
+      "name": "Business",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Administration in Business"
+    },
+    {
+      "name": "related field may be given exemptions based on the credit",
+      "qualification_type": "Diploma",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "related field may be given exemptions based on the credit"
+    },
+    {
+      "name": "related field may be given exemptions based",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in related field may be given exemptions based"
+    },
+    {
+      "name": "Science",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Graduates of this programme can :"
+    },
+    {
+      "name": "Science",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": ""
+    },
+    {
+      "name": "Science in Computing provides",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Computing provides"
+    },
+    {
+      "name": "related field may be given exemptions based",
+      "qualification_type": "Diploma",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in related field may be given exemptions based"
+    },
+    {
+      "name": "Science in",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in"
+    },
+    {
+      "name": "related field may be given exemptions based on the credit",
+      "qualification_type": "Diploma",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "related field may be given exemptions based on the credit"
+    },
+    {
+      "name": "Science in",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in"
+    },
+    {
+      "name": "related fields may be given exemptions based on the credit",
+      "qualification_type": "Diploma",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "related fields may be given exemptions based on the credit"
+    },
+    {
+      "name": "related field may be given exemptions based on the credit",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "related field may be given exemptions based on the credit"
+    },
+    {
+      "name": "Science in Health",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 12,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Health"
+    },
+    {
+      "name": "Science in Computing",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Computing"
+    },
+    {
+      "name": "Science in Data Science",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Data Science"
+    },
+    {
+      "name": "Science in Mobile Computing",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Mobile Computing"
+    },
+    {
+      "name": "Science in Computer Networking",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Computer Networking"
+    },
+    {
+      "name": "Commerce in Finance",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in Finance"
+    },
+    {
+      "name": "Commerce in Accounting",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in Accounting"
+    },
+    {
+      "name": "Commerce in Risk Management",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Commerce in Risk Management"
+    },
+    {
+      "name": "Business Administration in Business Man agement",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Business Administration in Business Man agement"
+    },
+    {
+      "name": "Science in Health Information  Management",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Accounting": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Science in Health Information  Management"
+    }
+  ],
+  "2026-LP-PROSPECTUS": [
+    {
+      "name": "Engineering",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor  of Engineering"
+    },
+    {
+      "name": "Engineering in Irrigation  & Drainage",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor  of Engineering in Irrigation  & Drainage"
+    },
+    {
+      "name": "Architecture",
+      "qualification_type": "Bachelor",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Architecture"
+    },
+    {
+      "name": "Secretarial Studies or Office",
+      "qualification_type": "Certificate",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate in Secretarial Studies or Office"
+    },
+    {
+      "name": "Secretarial",
+      "qualification_type": "Certificate",
+      "field_of_study": "Business",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Mathematics": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate in Secretarial"
+    },
+    {
+      "name": "Bricklaying & Plastering or Carpentry & Joinery or",
+      "qualification_type": "Certificate",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {
+        "Science": "A"
+      },
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bricklaying & Plastering or Carpentry & Joinery or"
+    },
+    {
+      "name": "Electrical",
+      "qualification_type": "Certificate",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Certificate in Electrical"
+    },
+    {
+      "name": "Engineering in Irrigation",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Engineering in Irrigation"
+    },
+    {
+      "name": "other Engineering",
+      "qualification_type": "Diploma",
+      "field_of_study": "Engineering",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in other Engineering"
+    },
+    {
+      "name": "Architecture",
+      "qualification_type": "Bachelor",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Bachelor of Architecture"
+    },
+    {
+      "name": "STEM",
+      "qualification_type": "Certificate",
+      "field_of_study": "Science",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Candidates who meet the minimum academic requirements"
+    },
+    {
+      "name": "Architectural Technology",
+      "qualification_type": "Diploma",
+      "field_of_study": "IT",
+      "duration_years": 3,
+      "compulsory_subjects": [],
+      "subject_requirements": {},
+      "minimum_score": 10,
+      "entry_requirements": "",
+      "description": "Diploma in Architectural Technology"
+    }
+  ]
+}

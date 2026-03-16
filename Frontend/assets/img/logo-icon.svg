@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" fill="none">
+  <defs>
+    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="capGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="strokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.5"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="1" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer hex ring -->
+  <polygon points="28,2 52,15 52,41 28,54 4,41 4,15" fill="url(#hexGrad)" stroke="url(#strokeGrad)" stroke-width="1.2"/>
+  
+  <!-- Inner hex -->
+  <polygon points="28,7 47,17.5 47,38.5 28,49 9,38.5 9,17.5" fill="none" stroke="url(#strokeGrad)" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- Graduation cap base (mortarboard) -->
+  <polygon points="28,17 43,22.5 28,28 13,22.5" fill="url(#capGrad)" filter="url(#softGlow)"/>
+  
+  <!-- Cap top -->
+  <rect x="23" y="15.5" width="10" height="1.8" rx="0.9" fill="url(#capGrad)" opacity="0.9"/>
+  
+  <!-- Degree scroll / tassel side -->
+  <line x1="43" y1="22.5" x2="43" y2="30" stroke="url(#capGrad)" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="43" cy="31" r="2.2" fill="url(#capGrad)" filter="url(#softGlow)"/>
+
+  <!-- Books / pages under cap -->
+  <path d="M16 24.5 L16 34 Q28 38 40 34 L40 24.5" stroke="url(#capGrad)" stroke-width="1.6" fill="none" stroke-linejoin="round" opacity="0.85"/>
+  
+  <!-- Star sparkle top right -->
+  <g transform="translate(44,10)" opacity="0.8">
+    <line x1="0" y1="-3" x2="0" y2="3" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="-3" y1="0" x2="3" y2="0" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="-2" y1="-2" x2="2" y2="2" stroke="#60a5fa" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="2" y1="-2" x2="-2" y2="2" stroke="#60a5fa" stroke-width="0.8" stroke-linecap="round"/>
+  </g>
+</svg>

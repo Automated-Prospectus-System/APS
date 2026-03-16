@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile — APS</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .profile-hero{display:flex;align-items:center;gap:1.5rem;padding:1.75rem 2rem;background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(16,185,129,.06));border:1px solid var(--border);border-radius:var(--radius-xl);margin-bottom:1.5rem;flex-wrap:wrap}
+    .profile-avatar-wrap{position:relative;cursor:pointer}
+    .profile-avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid rgba(59,130,246,.4);display:block}
+    .profile-avatar-text{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:#fff;border:3px solid rgba(59,130,246,.4)}
+    .avatar-edit-overlay{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;color:#fff;font-size:.75rem}
+    .profile-avatar-wrap:hover .avatar-edit-overlay{opacity:1}
+    .profile-name{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:.2rem}
+    .profile-email{font-size:.875rem;color:var(--text-dim);margin-bottom:.5rem}
+    .profile-badges{display:flex;gap:.5rem;flex-wrap:wrap}
+    .profile-badge{padding:.2rem .65rem;border-radius:999px;font-size:.75rem;font-weight:600;background:rgba(59,130,246,.12);color:var(--primary);border:1px solid rgba(59,130,246,.2)}
+    .profile-badge.admin{background:rgba(239,68,68,.1);color:var(--danger);border-color:rgba(239,68,68,.2)}
+
+    .tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;overflow-x:auto;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab-btn{padding:.65rem 1.2rem;border:none;background:none;color:var(--text-dim);cursor:pointer;font-size:.88rem;font-weight:500;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
+    .tab-btn:hover{color:var(--text)}
+    .tab-btn.active{color:var(--primary);border-bottom-color:var(--primary)}
+    .tab-pane{display:none}
+    .tab-pane.active{display:block;animation:fadeInUp .25s ease}
+
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+    @media(max-width:600px){.form-row{grid-template-columns:1fr}}
+
+    .saved-card{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:.75rem;gap:.75rem;flex-wrap:wrap;transition:.2s}
+    .saved-card:hover{border-color:rgba(255,255,255,.12)}
+    .saved-card-name{font-weight:600;font-size:.9rem;margin-bottom:.25rem}
+    .saved-card-meta{font-size:.8rem;color:var(--text-dim)}
+    .deadline-card{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:.6rem;gap:.75rem;flex-wrap:wrap;transition:.2s}
+    .deadline-card:hover{border-color:rgba(255,255,255,.12)}
+    .deadline-date{font-weight:700;font-size:1rem;color:var(--warning)}
+    .notif-card{display:flex;gap:.75rem;padding:.9rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:.6rem;transition:.2s;position:relative;overflow:hidden}
+    .notif-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--primary)}
+    .notif-card.read{opacity:.65}
+    .notif-card.read::before{background:var(--border)}
+    .notif-icon{width:36px;height:36px;border-radius:50%;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem;color:var(--primary)}
+    .notif-title{font-weight:600;font-size:.88rem;margin-bottom:.2rem}
+    .notif-msg{font-size:.82rem;color:var(--text-dim);line-height:1.5}
+    .notif-time{font-size:.75rem;color:var(--text-dim);margin-top:.3rem}
+    .empty-state{text-align:center;padding:3rem 1rem;color:var(--text-dim)}
+  </style>
+</head>
+<body>
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div id="toast-container"></div>
+<input type="file" id="photoInput" accept="image/*" style="display:none">
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-logo">
+    <img src="/assets/img/logo-icon.svg" style="width:38px;height:38px;flex-shrink:0">
+    <div><div class="logo-text">APS</div><div class="logo-sub">Eligibility System</div></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="dashboard.html" class="nav-link"><i class="fa fa-tachometer-alt nav-icon"></i>Dashboard</a>
+    <a href="eligibility.html" class="nav-link"><i class="fa fa-check-circle nav-icon"></i>Check Eligibility</a>
+    <a href="results.html" class="nav-link"><i class="fa fa-chart-bar nav-icon"></i>Results</a>
+    <div class="nav-section-label">Explore</div>
+    <a href="universities.html" class="nav-link"><i class="fa fa-university nav-icon"></i>Universities</a>
+    <a href="programmes.html" class="nav-link"><i class="fa fa-book-open nav-icon"></i>Programmes</a>
+    <div class="nav-section-label">Account</div>
+    <a href="profile.html" class="nav-link active"><i class="fa fa-user nav-icon"></i>Profile</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-ghost w-full" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+  </div>
+</aside>
+<div class="layout">
+  <header class="topbar">
+    <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+    <div class="topbar-title">My Profile</div>
+    <div class="topbar-actions">
+      <button class="topbar-icon" id="themeToggle"><i class="fa fa-moon"></i></button>
+      <a href="profile.html" class="topbar-avatar" id="topbarAvatar">?</a>
+    </div>
+  </header>
+  <main class="main-content">
+    <div id="profileHero" style="animation:fadeInUp .3s ease">
+      <div class="profile-hero">
+        <div class="profile-avatar-wrap" id="avatarWrap" onclick="document.getElementById('photoInput').click()">
+          <div class="profile-avatar-text" id="avatarDisplay">?</div>
+          <div class="avatar-edit-overlay"><i class="fa fa-camera" style="margin-right:.3rem"></i>Change</div>
+        </div>
+        <div>
+          <div class="profile-name" id="profileName">Loading…</div>
+          <div class="profile-email" id="profileEmail"></div>
+          <div class="profile-badges">
+            <span class="profile-badge" id="roleBadge"></span>
+            <span class="profile-badge" id="countryBadge"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tabs" style="animation:fadeInUp .3s .05s ease both">
+      <button class="tab-btn active" data-tab="edit"><i class="fa fa-user-edit" style="margin-right:.4rem"></i>Edit Profile</button>
+      <button class="tab-btn" data-tab="saved"><i class="fa fa-heart" style="margin-right:.4rem"></i>Saved <span id="savedBadge"></span></button>
+      <button class="tab-btn" data-tab="deadlines"><i class="fa fa-calendar" style="margin-right:.4rem"></i>Deadlines</button>
+      <button class="tab-btn" data-tab="notifications"><i class="fa fa-bell" style="margin-right:.4rem"></i>Notifications</button>
+      <button class="tab-btn" data-tab="security"><i class="fa fa-lock" style="margin-right:.4rem"></i>Security</button>
+    </div>
+
+    <!-- Edit Profile Tab -->
+    <div class="tab-pane active" id="tab-edit" style="animation:fadeInUp .3s .1s ease both">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Personal Information</div></div>
+        <div class="card-body">
+          <form id="profileForm">
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" id="pFullName" placeholder="Your full name"></div>
+              <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="pPhone" placeholder="+266 xxxx xxxx"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">School Name</label><input type="text" class="form-input" id="pSchool" placeholder="Your high school"></div>
+              <div class="form-group"><label class="form-label">Grade Level</label>
+                <select class="form-input" id="pGrade">
+                  <option value="">Select grade</option>
+                  <option value="Grade 10">Grade 10</option>
+                  <option value="Grade 11">Grade 11</option>
+                  <option value="Grade 12">Grade 12 / Form E</option>
+                  <option value="Completed">Completed LGCSE</option>
+                  <option value="Gap Year">Gap Year</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Country</label>
+                <select class="form-input" id="pCountry">
+                  <option value="Lesotho">🇱🇸 Lesotho</option>
+                  <option value="South Africa">🇿🇦 South Africa</option>
+                  <option value="Botswana">🇧🇼 Botswana</option>
+                  <option value="Namibia">🇳🇦 Namibia</option>
+                  <option value="Zimbabwe">🇿🇼 Zimbabwe</option>
+                  <option value="Other">🌍 Other</option>
+                </select>
+              </div>
+              <div class="form-group"><label class="form-label">City</label><input type="text" class="form-input" id="pCity" placeholder="Maseru"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:1.25rem">
+              <label style="display:flex;align-items:center;gap:.65rem;cursor:pointer;font-size:.88rem">
+                <input type="checkbox" id="pEmailNotif" style="accent-color:var(--primary);width:16px;height:16px">
+                Receive email notifications about eligibility results and deadlines
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="saveProfileBtn"><i class="fa fa-save"></i> Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saved Programmes Tab -->
+    <div class="tab-pane" id="tab-saved">
+      <div id="savedList"></div>
+    </div>
+
+    <!-- Deadlines Tab -->
+    <div class="tab-pane" id="tab-deadlines">
+      <button class="btn btn-primary" id="addDeadlineBtn" style="margin-bottom:1rem"><i class="fa fa-plus"></i> Add Reminder</button>
+      <div id="deadlineList"></div>
+    </div>
+
+    <!-- Notifications Tab -->
+    <div class="tab-pane" id="tab-notifications">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:.75rem">
+        <button class="btn btn-ghost btn-sm" id="markAllReadBtn"><i class="fa fa-check-double"></i> Mark All Read</button>
+      </div>
+      <div id="notifList"></div>
+    </div>
+
+    <!-- Security Tab -->
+    <div class="tab-pane" id="tab-security">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Change Password</div></div>
+        <div class="card-body">
+          <form id="pwdForm">
+            <div class="form-group"><label class="form-label">Current Password</label><input type="password" class="form-input" id="curPwd" placeholder="Current password"></div>
+            <div class="form-group"><label class="form-label">New Password</label><input type="password" class="form-input" id="newPwd" placeholder="Min 8 characters"></div>
+            <div class="form-group"><label class="form-label">Confirm New Password</label><input type="password" class="form-input" id="confirmPwd" placeholder="Repeat new password"></div>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-lock"></i> Update Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add Deadline Modal -->
+<div class="modal-overlay" id="deadlineModal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Add Deadline Reminder</h3><button class="modal-close" id="closeDeadlineModal"><i class="fa fa-times"></i></button></div>
+    <div class="modal-body">
+      <form id="deadlineForm">
+        <div class="form-group"><label class="form-label">Title *</label><input type="text" class="form-input" id="dlTitle" placeholder="e.g. NUL Application Deadline" required></div>
+        <div class="form-group"><label class="form-label">Date *</label><input type="date" class="form-input" id="dlDate" required></div>
+        <div class="form-group"><label class="form-label">Notes (optional)</label><textarea class="form-input" id="dlNotes" rows="2" placeholder="Any additional notes…"></textarea></div>
+        <button type="submit" class="btn btn-primary w-full"><i class="fa fa-bell"></i> Add Reminder</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { apiFetch, getUser, getToken, clearToken, setTheme, getTheme, showToast, isLoggedIn } from '/assets/js/api.js';
+
+if(!isLoggedIn()){window.location.href='/login.html';}
+
+async function init(){
+  const theme=getTheme();document.documentElement.dataset.theme=theme;
+  document.getElementById('themeToggle').querySelector('i').className=theme==='dark'?'fa fa-sun':'fa fa-moon';
+  document.getElementById('menuToggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('show')});
+  document.getElementById('sidebar-overlay').addEventListener('click',()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('show')});
+  document.getElementById('themeToggle').addEventListener('click',()=>{const t=getTheme()==='dark'?'light':'dark';setTheme(t);document.documentElement.dataset.theme=t;document.getElementById('themeToggle').querySelector('i').className=t==='dark'?'fa fa-sun':'fa fa-moon'});
+  document.getElementById('logoutBtn').addEventListener('click',()=>{clearToken();window.location.href='/login.html'});
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+      this.classList.add('active');
+      const pane=document.getElementById('tab-'+this.dataset.tab);
+      if(pane){pane.classList.add('active');loadTabData(this.dataset.tab);}
+    });
+  });
+
+  // Photo upload
+  document.getElementById('photoInput').addEventListener('change',async e=>{
+    const file=e.target.files[0];if(!file) return;
+    const fd=new FormData();fd.append('photo',file);
+    try{
+      const res=await fetch('/api/users/profile/photo',{method:'POST',headers:{Authorization:`Bearer ${getToken()}`},body:fd});
+      const data=await res.json();
+      if(data.success){showToast('Photo updated!','success');renderAvatar(data.url);localStorage.setItem('aps_user',JSON.stringify({...getUser(),profile_photo_url:data.url}))}
+      else showToast(data.message||'Upload failed','error');
+    } catch{showToast('Upload error','error');}
+  });
+
+  // Profile form
+  document.getElementById('profileForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const btn=document.getElementById('saveProfileBtn');btn.disabled=true;btn.innerHTML='<i class="fa fa-spinner fa-spin"></i> Saving…';
+    try{
+      const data=await apiFetch('/users/profile',{method:'PATCH',body:JSON.stringify({
+        full_name:document.getElementById('pFullName').value,
+        phone:document.getElementById('pPhone').value,
+        school_name:document.getElementById('pSchool').value,
+        grade_level:document.getElementById('pGrade').value,
+        country:document.getElementById('pCountry').value,
+        city:document.getElementById('pCity').value,
+        email_notifications:document.getElementById('pEmailNotif').checked
+      })});
+      if(data.success){showToast('Profile updated!','success');localStorage.setItem('aps_user',JSON.stringify(data.user));renderHero(data.user);}
+      else showToast(data.message||'Update failed','error');
+    } catch{showToast('Save error','error');}
+    btn.disabled=false;btn.innerHTML='<i class="fa fa-save"></i> Save Changes';
+  });
+
+  // Password form
+  document.getElementById('pwdForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const np=document.getElementById('newPwd').value,cp=document.getElementById('confirmPwd').value;
+    if(np!==cp){showToast('Passwords do not match','error');return;}
+    if(np.length<8){showToast('Password must be at least 8 characters','error');return;}
+    try{
+      const data=await apiFetch('/users/change-password',{method:'PATCH',body:JSON.stringify({current_password:document.getElementById('curPwd').value,new_password:np})});
+      if(data.success){showToast('Password changed!','success');document.getElementById('pwdForm').reset();}
+      else showToast(data.message||'Failed','error');
+    } catch{showToast('Error changing password','error');}
+  });
+
+  // Deadline modal
+  document.getElementById('addDeadlineBtn').addEventListener('click',()=>{document.getElementById('deadlineModal').classList.add('show')});
+  document.getElementById('closeDeadlineModal').addEventListener('click',()=>{document.getElementById('deadlineModal').classList.remove('show')});
+  document.getElementById('deadlineModal').addEventListener('click',e=>{if(e.target===document.getElementById('deadlineModal'))document.getElementById('deadlineModal').classList.remove('show')});
+  document.getElementById('deadlineForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    try{
+      const data=await apiFetch('/users/deadlines',{method:'POST',body:JSON.stringify({reminder_title:document.getElementById('dlTitle').value,reminder_date:document.getElementById('dlDate').value,notes:document.getElementById('dlNotes').value||null})});
+      if(data.success){showToast('Reminder added!','success');document.getElementById('deadlineModal').classList.remove('show');document.getElementById('deadlineForm').reset();loadDeadlines();}
+      else showToast(data.message,'error');
+    } catch{showToast('Error adding reminder','error');}
+  });
+
+  // Mark all read
+  document.getElementById('markAllReadBtn').addEventListener('click',async()=>{
+    try{await apiFetch('/users/notifications/read-all',{method:'PATCH'});showToast('All marked as read','success');loadNotifications();}catch{showToast('Error','error');}
+  });
+
+  await loadProfile();
+  loadTabData('edit');
+}
+
+async function loadProfile(){
+  try{
+    const data=await apiFetch('/users/profile');
+    if(!data.success) return;
+    const u=data.user;
+    renderHero(u);
+    document.getElementById('pFullName').value=u.full_name||'';
+    document.getElementById('pPhone').value=u.phone||'';
+    document.getElementById('pSchool').value=u.school_name||'';
+    document.getElementById('pGrade').value=u.grade_level||'';
+    document.getElementById('pCountry').value=u.country||'Lesotho';
+    document.getElementById('pCity').value=u.city||'';
+    document.getElementById('pEmailNotif').checked=!!u.email_notifications;
+    document.getElementById('topbarAvatar').textContent=(u.full_name||u.email||'?')[0].toUpperCase();
+    if(u.profile_photo_url){const img=document.createElement('img');img.src=u.profile_photo_url;img.style='width:32px;height:32px;border-radius:50%;object-fit:cover';document.getElementById('topbarAvatar').innerHTML='';document.getElementById('topbarAvatar').appendChild(img);}
+  } catch(e){console.error(e);}
+}
+
+function renderHero(u){
+  document.getElementById('profileName').textContent=u.full_name||u.email;
+  document.getElementById('profileEmail').textContent=u.email;
+  document.getElementById('roleBadge').textContent=u.role||'student';
+  document.getElementById('roleBadge').className='profile-badge'+(u.role==='admin'?' admin':'');
+  document.getElementById('countryBadge').textContent=u.country||'Lesotho';
+  renderAvatar(u.profile_photo_url,u.full_name||u.email);
+}
+
+function renderAvatar(url,name){
+  const wrap=document.getElementById('avatarDisplay');
+  if(url){wrap.outerHTML=`<img class="profile-avatar" id="avatarDisplay" src="${url}" alt="Avatar">`;return;}
+  document.getElementById('avatarDisplay').textContent=(name||'?')[0].toUpperCase();
+}
+
+function loadTabData(tab){
+  if(tab==='saved') loadSaved();
+  else if(tab==='deadlines') loadDeadlines();
+  else if(tab==='notifications') loadNotifications();
+}
+
+async function loadSaved(){
+  const el=document.getElementById('savedList');
+  el.innerHTML=`<div class="empty-state"><div class="spinner" style="width:1.5rem;height:1.5rem;margin:0 auto"></div></div>`;
+  try{
+    const data=await apiFetch('/users/saved');
+    const saved=data.data||[];
+    document.getElementById('savedBadge').textContent=saved.length?`(${saved.length})`:'';
+    if(!saved.length){el.innerHTML=`<div class="empty-state"><div style="font-size:2.5rem;opacity:.3">💙</div><p>No saved programmes yet.</p><a href="programmes.html" class="btn btn-primary" style="margin-top:.75rem">Browse Programmes</a></div>`;return;}
+    el.innerHTML=saved.map(s=>`<div class="saved-card">
+      <div><div class="saved-card-name">${s.programme_name}</div><div class="saved-card-meta">${s.institution_name} · ${s.qualification_type} · ${s.duration_years}yr</div></div>
+      <div style="display:flex;gap:.5rem">
+        <a href="programmes.html?id=${s.programme_id}" class="btn btn-outline btn-sm"><i class="fa fa-external-link-alt"></i></a>
+        <button class="btn btn-ghost btn-sm" onclick="window._unsave('${s.programme_id}',this)"><i class="fa fa-trash" style="color:var(--danger)"></i></button>
+      </div>
+    </div>`).join('');
+    window._unsave=async(id,btn)=>{btn.disabled=true;try{await apiFetch(`/users/saved/${id}`,{method:'DELETE'});showToast('Removed','success');loadSaved();}catch{showToast('Error','error');btn.disabled=false;}};
+  } catch{el.innerHTML=`<div class="empty-state">Failed to load saved programmes.</div>`;}
+}
+
+async function loadDeadlines(){
+  const el=document.getElementById('deadlineList');
+  el.innerHTML=`<div class="empty-state"><div class="spinner" style="width:1.5rem;height:1.5rem;margin:0 auto"></div></div>`;
+  try{
+    const data=await apiFetch('/users/deadlines');
+    const deadlines=data.data||[];
+    if(!deadlines.length){el.innerHTML=`<div class="empty-state"><div style="font-size:2.5rem;opacity:.3">📅</div><p>No reminders yet.</p></div>`;return;}
+    el.innerHTML=deadlines.map(d=>{
+      const dt=new Date(d.reminder_date);const past=dt<new Date();
+      return `<div class="deadline-card" style="${past?'opacity:.5':''}">
+        <div><div style="font-weight:600;font-size:.9rem">${d.reminder_title}</div>${d.notes?`<div style="font-size:.8rem;color:var(--text-dim)">${d.notes}</div>`:''}</div>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <span class="deadline-date">${dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</span>
+          <button class="btn btn-ghost btn-sm" onclick="window._deleteDeadline(${d.reminder_id},this)"><i class="fa fa-trash" style="color:var(--danger)"></i></button>
+        </div>
+      </div>`;
+    }).join('');
+    window._deleteDeadline=async(id,btn)=>{btn.disabled=true;try{await apiFetch(`/users/deadlines/${id}`,{method:'DELETE'});showToast('Deleted','success');loadDeadlines();}catch{showToast('Error','error');btn.disabled=false;}};
+  } catch{el.innerHTML=`<div class="empty-state">Failed to load deadlines.</div>`;}
+}
+
+async function loadNotifications(){
+  const el=document.getElementById('notifList');
+  el.innerHTML=`<div class="empty-state"><div class="spinner" style="width:1.5rem;height:1.5rem;margin:0 auto"></div></div>`;
+  try{
+    const data=await apiFetch('/users/notifications');
+    const notifs=data.data||[];
+    if(!notifs.length){el.innerHTML=`<div class="empty-state"><div style="font-size:2.5rem;opacity:.3">🔔</div><p>No notifications yet.</p></div>`;return;}
+    const icons={eligibility:'fa-chart-bar',deadline:'fa-calendar',system:'fa-cog',welcome:'fa-hand-wave',password_reset:'fa-lock'};
+    el.innerHTML=notifs.map(n=>`<div class="notif-card ${n.is_read?'read':''}">
+      <div class="notif-icon"><i class="fa ${icons[n.type]||'fa-bell'}"></i></div>
+      <div style="flex:1">
+        <div class="notif-title">${n.title}</div>
+        <div class="notif-msg">${n.message}</div>
+        <div class="notif-time">${new Date(n.created_at).toLocaleString()}</div>
+      </div>
+      ${n.link?`<a href="${n.link}" class="btn btn-outline btn-sm" style="flex-shrink:0"><i class="fa fa-external-link-alt"></i></a>`:''}
+    </div>`).join('');
+  } catch{el.innerHTML=`<div class="empty-state">Failed to load notifications.</div>`;}
+}
+
+init();
+</script>
+</body>
+</html>

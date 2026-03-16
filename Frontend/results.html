@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eligibility Results — APS</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .results-hero{background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(16,185,129,.08));border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.75rem 2rem;margin-bottom:1.5rem;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+    .hero-icon{width:64px;height:64px;border-radius:var(--radius-lg);background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:1.75rem;flex-shrink:0}
+    .hero-title{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.25rem}
+    .hero-sub{font-size:.875rem;color:var(--text-dim)}
+    .hero-stats{display:flex;gap:1.25rem;margin-left:auto;flex-wrap:wrap}
+    .hero-stat{text-align:center}
+    .hero-stat-num{font-size:1.75rem;font-weight:800;line-height:1}
+    .hero-stat-num.eligible{color:var(--success)}
+    .hero-stat-num.borderline{color:var(--warning)}
+    .hero-stat-num.not-elig{color:var(--danger)}
+    .hero-stat-label{font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em}
+    .grades-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.5rem}
+    .grades-title{font-weight:600;font-size:.85rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem}
+    .grades-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+    .grade-chip{display:flex;align-items:center;gap:.4rem;padding:.3rem .7rem;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--border);font-size:.8rem}
+    .grade-chip .gv{font-weight:700;padding:.15rem .45rem;border-radius:4px;font-size:.75rem;background:rgba(59,130,246,.15);color:var(--primary)}
+    .filter-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem;align-items:center}
+    .filter-chip{padding:.35rem .9rem;border:1px solid var(--border);border-radius:999px;font-size:.8rem;cursor:pointer;transition:.2s;background:var(--surface);color:var(--text);white-space:nowrap}
+    .filter-chip:hover{border-color:var(--primary);color:var(--primary)}
+    .filter-chip.active{background:var(--primary);border-color:var(--primary);color:#fff}
+    .filter-chip.eligible-chip.active{background:var(--success);border-color:var(--success)}
+    .filter-chip.borderline-chip.active{background:var(--warning);border-color:var(--warning);color:#000}
+    .filter-chip.not-elig-chip.active{background:var(--danger);border-color:var(--danger)}
+    .result-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem 1.35rem;margin-bottom:.85rem;background:var(--surface);transition:.25s;cursor:pointer;position:relative;overflow:hidden}
+    .result-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+    .result-card.eligible::before{background:var(--success)}
+    .result-card.borderline::before{background:var(--warning)}
+    .result-card.not-eligible::before{background:var(--danger)}
+    .result-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3);border-color:rgba(255,255,255,.12)}
+    .result-card.not-eligible{opacity:.65}
+    .result-card.not-eligible:hover{opacity:1}
+    .rc-header{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem;margin-bottom:.75rem}
+    .rc-name{font-weight:700;font-size:.95rem;flex:1;line-height:1.3}
+    .rc-institution{font-size:.8rem;color:var(--text-dim);margin-top:.2rem}
+    .rc-badge{padding:.25rem .65rem;border-radius:999px;font-size:.75rem;font-weight:600}
+    .rc-badge.eligible{background:rgba(16,185,129,.15);color:var(--success)}
+    .rc-badge.borderline{background:rgba(245,158,11,.15);color:var(--warning)}
+    .rc-badge.not-eligible{background:rgba(239,68,68,.15);color:var(--danger)}
+    .rc-body{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+    .rc-info{display:flex;gap:1rem;flex-wrap:wrap;flex:1}
+    .rc-info-item{display:flex;flex-direction:column;gap:.15rem}
+    .rc-info-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim)}
+    .rc-info-value{font-size:.88rem;font-weight:600}
+    .rc-expand{margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);display:none}
+    .rc-expand.open{display:block;animation:fadeInUp .2s ease}
+    .req-list{list-style:none;padding:0;margin:0}
+    .req-item{display:flex;align-items:flex-start;gap:.5rem;padding:.3rem 0;font-size:.83rem}
+    .req-item.fail{color:var(--danger)}
+    .req-item.warn{color:var(--warning)}
+    .req-item.info{color:var(--text-dim)}
+    .req-item i{margin-top:.1rem;flex-shrink:0}
+    .compare-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(5,11,24,.96);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;z-index:200;transform:translateY(100%);transition:.3s cubic-bezier(.34,1.56,.64,1)}
+    .compare-bar.show{transform:translateY(0)}
+    .compare-items{display:flex;gap:.5rem;flex-wrap:wrap}
+    .compare-pill{padding:.3rem .7rem;background:rgba(59,130,246,.15);border:1px solid var(--primary);border-radius:999px;font-size:.8rem;display:flex;align-items:center;gap:.4rem}
+    .compare-pill button{background:none;border:none;color:var(--danger);cursor:pointer;padding:0;line-height:1;font-size:.9rem}
+    .empty-state{text-align:center;padding:4rem 2rem;color:var(--text-dim)}
+    .empty-icon{font-size:3rem;margin-bottom:1rem;opacity:.4}
+    .section-divider{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;margin-top:.5rem}
+    .section-divider-line{flex:1;height:1px;background:var(--border)}
+    .section-divider-label{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .75rem;border-radius:999px}
+    .section-divider-label.eligible{background:rgba(16,185,129,.12);color:var(--success)}
+    .section-divider-label.borderline{background:rgba(245,158,11,.12);color:var(--warning)}
+    .section-divider-label.not-eligible{background:rgba(239,68,68,.12);color:var(--danger)}
+    .aps-meter{display:flex;align-items:center;gap:.6rem;min-width:140px}
+    .aps-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+    .aps-bar-fill{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.34,1.56,.64,1)}
+    .aps-bar-fill.good{background:var(--success)}
+    .aps-bar-fill.mid{background:var(--warning)}
+    .aps-bar-fill.bad{background:var(--danger)}
+    .aps-text{font-size:.8rem;font-weight:600;white-space:nowrap}
+    @media(max-width:700px){.rc-header{flex-direction:column}.hero-stats{margin-left:0;width:100%;justify-content:space-around}}
+  </style>
+</head>
+<body>
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div id="toast-container"></div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-logo">
+    <img src="/assets/img/logo-icon.svg" style="width:38px;height:38px;flex-shrink:0">
+    <div><div class="logo-text">APS</div><div class="logo-sub">Eligibility System</div></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="dashboard.html" class="nav-link"><i class="fa fa-tachometer-alt nav-icon"></i>Dashboard</a>
+    <a href="eligibility.html" class="nav-link"><i class="fa fa-check-circle nav-icon"></i>Check Eligibility</a>
+    <a href="results.html" class="nav-link active"><i class="fa fa-chart-bar nav-icon"></i>Results</a>
+    <div class="nav-section-label">Explore</div>
+    <a href="universities.html" class="nav-link"><i class="fa fa-university nav-icon"></i>Universities</a>
+    <a href="programmes.html" class="nav-link"><i class="fa fa-book-open nav-icon"></i>Programmes</a>
+    <div class="nav-section-label">Account</div>
+    <a href="profile.html" class="nav-link"><i class="fa fa-user nav-icon"></i>Profile</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-ghost w-full" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+  </div>
+</aside>
+<div class="layout">
+  <header class="topbar">
+    <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+    <div class="topbar-title">Eligibility Results</div>
+    <div class="topbar-actions">
+      <button class="btn btn-outline btn-sm" onclick="location.href='eligibility.html'"><i class="fa fa-plus"></i> New Check</button>
+      <button class="btn btn-ghost btn-sm share-btn hidden" id="shareBtn" title="Share results"><i class="fa fa-share-alt"></i> Share</button>
+      <button class="btn btn-primary btn-sm hidden" id="downloadBtn"><i class="fa fa-download"></i> PDF</button>
+      <button class="btn btn-ghost btn-sm hidden" id="printBtn" onclick="window.print()" title="Print results"><i class="fa fa-print"></i></button>
+      <button class="topbar-icon" id="themeToggle"><i class="fa fa-moon"></i></button>
+      <a href="profile.html" class="topbar-avatar" id="topbarAvatar">?</a>
+    </div>
+  </header>
+  <main class="main-content">
+    <div id="loadingState" style="text-align:center;padding:4rem">
+      <div class="spinner" style="width:2.5rem;height:2.5rem;margin:0 auto 1rem"></div>
+      <p style="color:var(--text-dim)">Loading your results…</p>
+    </div>
+    <div id="resultsContent" style="display:none"></div>
+  </main>
+</div>
+<div class="compare-bar" id="compareBar">
+  <div>
+    <div style="font-weight:600;font-size:.9rem;margin-bottom:.3rem">Compare Programmes</div>
+    <div class="compare-items" id="compareItems"></div>
+  </div>
+  <button class="btn btn-primary" id="doCompareBtn"><i class="fa fa-columns"></i> Compare</button>
+</div>
+<script type="module">
+import { apiFetch, getToken, getUser, clearToken, setTheme, getTheme, showToast, isLoggedIn } from '/assets/js/api.js';
+import { initAllFeatures } from '/assets/js/features.js';
+const compareSet = new Map();
+let allResults = { eligible:[], borderline:[], not_eligible:[] };
+let activeFilter = 'all';
+let activeInst = 'all';
+let searchQuery = '';
+
+async function init() {
+  const theme = getTheme();
+  document.documentElement.dataset.theme = theme;
+  document.getElementById('themeToggle').querySelector('i').className = theme==='dark'?'fa fa-sun':'fa fa-moon';
+  const user = getUser();
+  if (user) {
+    const av = document.getElementById('topbarAvatar');
+    if (user.profile_photo_url) av.innerHTML=`<img src="${user.profile_photo_url}" style="width:32px;height:32px;border-radius:50%;object-fit:cover">`;
+    else av.textContent=(user.full_name||user.email||'?')[0].toUpperCase();
+  }
+  document.getElementById('menuToggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('show')});
+  document.getElementById('sidebar-overlay').addEventListener('click',()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('show')});
+  document.getElementById('themeToggle').addEventListener('click',()=>{const t=getTheme()==='dark'?'light':'dark';setTheme(t);document.documentElement.dataset.theme=t;document.getElementById('themeToggle').querySelector('i').className=t==='dark'?'fa fa-sun':'fa fa-moon'});
+  document.getElementById('logoutBtn').addEventListener('click',()=>{clearToken();window.location.href='/login.html'});
+  document.getElementById('doCompareBtn').addEventListener('click',()=>{window.location.href=`/compare.html?ids=${[...compareSet.keys()].join(',')}`});
+
+  const token = new URLSearchParams(location.search).get('session');
+  if (!token) { showEmpty(); return; }
+  try {
+    const data = await apiFetch(`/eligibility/session/${token}`);
+    if (!data.success) { showEmpty(); return; }
+    allResults = { eligible:data.eligible||[], borderline:data.borderline||[], not_eligible:data.not_eligible||[] };
+    showPage(data);
+
+    // ── Fix: correct PDF download URL ──────────────────────
+    document.getElementById('downloadBtn').classList.remove('hidden');
+    document.getElementById('downloadBtn').addEventListener('click', () =>
+      window.open(`/api/eligibility/report/${token}`, '_blank'));
+
+    // ── Feature 5: Print button ─────────────────────────────
+    document.getElementById('printBtn').classList.remove('hidden');
+
+    // ── Feature 4: Share results ────────────────────────────
+    const shareBtn = document.getElementById('shareBtn');
+    shareBtn.classList.remove('hidden');
+    shareBtn.addEventListener('click', async () => {
+      const url = window.location.href;
+      if (navigator.share) {
+        await navigator.share({ title: 'My APS Eligibility Results', url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        showToast('Link copied to clipboard!', 'success');
+      }
+    });
+  } catch(e) { showEmpty(); }
+
+  initAllFeatures();
+}
+
+function showEmpty(){
+  document.getElementById('loadingState').style.display='none';
+  document.getElementById('resultsContent').style.display='';
+  document.getElementById('resultsContent').innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><h3>No results found</h3><p>This session may have expired.</p><a href="eligibility.html" class="btn btn-primary" style="margin-top:1rem">Run New Check</a></div>`;
+}
+
+function showPage(data) {
+  document.getElementById('loadingState').style.display='none';
+  document.getElementById('resultsContent').style.display='';
+  const {session,summary}=data;
+  const subjects=session.lgcse_results||[];
+  const allInsts=[...new Set([...allResults.eligible,...allResults.borderline,...allResults.not_eligible].map(r=>r.institution_name))].sort();
+  document.getElementById('resultsContent').innerHTML=`
+    <div class="results-hero" style="animation:fadeInUp .4s ease">
+      <div class="hero-icon">🎯</div>
+      <div><div class="hero-title">Eligibility Results</div><div class="hero-sub">${session.qual_type} results · ${new Date(session.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div></div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num eligible">${summary.eligible_count}</div><div class="hero-stat-label">Eligible</div></div>
+        <div class="hero-stat"><div class="hero-stat-num borderline">${summary.borderline_count}</div><div class="hero-stat-label">Borderline</div></div>
+        <div class="hero-stat"><div class="hero-stat-num not-elig">${summary.not_eligible_count}</div><div class="hero-stat-label">Not Eligible</div></div>
+        <div class="hero-stat"><div class="hero-stat-num" style="color:var(--primary)">${summary.total_checked}</div><div class="hero-stat-label">Total</div></div>
+      </div>
+    </div>
+    <div class="grades-section" style="animation:fadeInUp .4s .1s ease both">
+      <div class="grades-title"><i class="fa fa-clipboard-list" style="margin-right:.4rem"></i>Your Submitted Grades</div>
+      <div class="grades-chips" id="gradesChips"></div>
+    </div>
+    <div class="filter-bar" style="animation:fadeInUp .4s .15s ease both">
+      <span style="font-size:.8rem;color:var(--text-dim);margin-right:.25rem">Filter:</span>
+      <button class="filter-chip active" data-filter="all">All (${summary.total_checked})</button>
+      <button class="filter-chip eligible-chip" data-filter="eligible">✅ Eligible (${summary.eligible_count})</button>
+      <button class="filter-chip borderline-chip" data-filter="borderline">⚠️ Borderline (${summary.borderline_count})</button>
+      <button class="filter-chip not-elig-chip" data-filter="not_eligible">❌ Not Eligible (${summary.not_eligible_count})</button>
+      ${allInsts.map(i=>`<button class="filter-chip" data-inst="${i}">${i.replace('National University of Lesotho','NUL').replace('Limkokwing University','LP').replace('Botho University','Botho')}</button>`).join('')}
+      <div class="results-search" style="margin-left:auto">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="resultsSearch" placeholder="Search programmes…" autocomplete="off">
+      </div>
+    </div>
+    <div id="resultsList" style="animation:fadeInUp .4s .2s ease both"></div>
+    <div style="height:80px"></div>`;
+  const gc=document.getElementById('gradesChips');
+  subjects.forEach(s=>{const ch=document.createElement('div');ch.className='grade-chip';ch.innerHTML=`<span>${s.subject_id.replace(/_/g,' ')}</span><span class="gv">${s.grade}</span>`;gc.appendChild(ch)});
+  document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',function(){document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));this.classList.add('active');activeFilter=this.dataset.filter;renderList()}));
+  document.querySelectorAll('[data-inst]').forEach(btn=>btn.addEventListener('click',function(){const same=activeInst===this.dataset.inst;document.querySelectorAll('[data-inst]').forEach(b=>b.classList.remove('active'));activeInst=same?'all':this.dataset.inst;if(!same)this.classList.add('active');renderList()}));
+  // ── Feature 9: Text search ────────────────────────────────
+  const srch=document.getElementById('resultsSearch');
+  if(srch)srch.addEventListener('input',()=>{searchQuery=srch.value.toLowerCase();renderList()});
+  renderList();
+}
+
+function renderList() {
+  let items=[];
+  if(activeFilter==='all'||activeFilter==='eligible') items.push(...allResults.eligible.map(r=>({...r,_st:'eligible'})));
+  if(activeFilter==='all'||activeFilter==='borderline') items.push(...allResults.borderline.map(r=>({...r,_st:'borderline'})));
+  if(activeFilter==='all'||activeFilter==='not_eligible') items.push(...allResults.not_eligible.map(r=>({...r,_st:'not-eligible'})));
+  if(activeInst!=='all') items=items.filter(r=>r.institution_name===activeInst);
+  // Feature 9: apply text search filter
+  if(searchQuery) items=items.filter(r=>(r.programme_name||'').toLowerCase().includes(searchQuery)||(r.institution_name||'').toLowerCase().includes(searchQuery)||(r.faculty_name||'').toLowerCase().includes(searchQuery));
+  const el=document.getElementById('resultsList');
+  if(!items.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><p>No programmes match this filter.</p></div>`;return;}
+  const g={eligible:[],borderline:[],'not-eligible':[]};
+  items.forEach(r=>g[r._st||'not-eligible'].push(r));
+  let html='';
+  [{key:'eligible',label:'Eligible',cls:'eligible'},{key:'borderline',label:'Borderline',cls:'borderline'},{key:'not-eligible',label:'Not Eligible',cls:'not-eligible'}].forEach(sec=>{
+    if(!g[sec.key].length) return;
+    if(activeFilter==='all') html+=`<div class="section-divider"><div class="section-divider-line"></div><span class="section-divider-label ${sec.cls}">${sec.label} (${g[sec.key].length})</span><div class="section-divider-line"></div></div>`;
+    g[sec.key].forEach(r=>{html+=buildCard(r)});
+  });
+  el.innerHTML=html;
+  el.querySelectorAll('.result-card').forEach(card=>{
+    card.addEventListener('click',e=>{if(e.target.closest('button')||e.target.closest('a')||e.target.closest('input')) return;card.querySelector('.rc-expand')?.classList.toggle('open')});
+  });
+  el.querySelectorAll('.save-btn').forEach(btn=>{
+    btn.addEventListener('click',async e=>{e.stopPropagation();if(!isLoggedIn()){window.location.href='/login.html';return;}
+      try{await apiFetch(`/users/saved/${btn.dataset.id}`,{method:'POST'});btn.innerHTML='<i class="fa fa-heart" style="color:var(--danger)"></i>';showToast('Saved!','success')}catch{showToast('Could not save.','error')}
+    });
+  });
+  el.querySelectorAll('.compare-cb').forEach(cb=>{
+    cb.addEventListener('change',e=>{e.stopPropagation();const{id,name,inst}=cb.dataset;
+      if(cb.checked){if(compareSet.size>=3){cb.checked=false;showToast('Max 3 programmes','warning');return;}compareSet.set(id,{name,inst})}else compareSet.delete(id);updateCompareBar()});
+  });
+}
+
+function buildCard(r) {
+  const st=r._st||'not-eligible';
+  const statusLabel=st==='eligible'?'Eligible':st==='borderline'?'Borderline':'Not Eligible';
+  const apsCalc=r.aps_calculated??null;const apsMax=r.aps_max_allowed??null;
+  const apsPct=(apsCalc!=null&&apsMax!=null)?Math.min(100,Math.round((apsMax-apsCalc+1)/apsMax*100)):null;
+  const apsClass=st==='eligible'?'good':st==='borderline'?'mid':'bad';
+  const quals={degree:'🎓 Degree',diploma:'📜 Diploma',certificate:'📋 Certificate',honours:'⭐ Honours'};
+  const entries={direct:'Direct',indirect:'Bridging',rpl:'RPL',odl:'Distance'};
+  const failed=r.failed_requirements||[];const border=r.borderline_requirements||[];const flags=r.flags||[];
+  const allReqs=[...failed.map(f=>({text:f,type:'fail'})),...border.map(b=>({text:b,type:'warn'})),...flags.map(f=>({text:f,type:'info'}))];
+  const reqHtml=allReqs.length?`<ul class="req-list">${allReqs.map(req=>`<li class="req-item ${req.type}"><i class="fa ${req.type==='fail'?'fa-times-circle':req.type==='warn'?'fa-exclamation-circle':'fa-info-circle'}"></i><span>${req.text}</span></li>`).join('')}</ul>`
+    :(st==='eligible'?`<p style="color:var(--success);font-size:.83rem"><i class="fa fa-check-circle"></i> All requirements met!</p>`:'');
+  return `<div class="result-card ${st}" style="animation:cardReveal .3s ease both">
+    <div class="rc-header">
+      <div><div class="rc-name">${r.programme_name}</div><div class="rc-institution"><i class="fa fa-university" style="margin-right:.3rem;opacity:.6"></i>${r.institution_name} · ${r.faculty_name}</div></div>
+      <div style="display:flex;align-items:center;gap:.5rem;flex-shrink:0">
+        <span class="rc-badge ${st}">${statusLabel}</span>
+        <input type="checkbox" class="compare-cb" data-id="${r.programme_id}" data-name="${r.programme_name}" data-inst="${r.institution_name}" title="Compare" style="width:16px;height:16px;cursor:pointer;accent-color:var(--primary)">
+      </div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-info">
+        <div class="rc-info-item"><span class="rc-info-label">Type</span><span class="rc-info-value">${quals[r.qualification_type]||r.qualification_type}</span></div>
+        <div class="rc-info-item"><span class="rc-info-label">Duration</span><span class="rc-info-value">${r.duration_years} yr</span></div>
+        <div class="rc-info-item"><span class="rc-info-label">Entry</span><span class="rc-info-value">${entries[r.entry_type]||r.entry_type}</span></div>
+        ${apsCalc!=null?`<div class="rc-info-item"><span class="rc-info-label">APS</span><span class="rc-info-value">${apsCalc}${apsMax?' / '+apsMax:''}</span></div>`:''}
+        ${r.fee_local?`<div class="rc-info-item"><span class="rc-info-label">Fee/yr</span><span class="rc-info-value">M ${Number(r.fee_local).toLocaleString()}</span></div>`:''}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;align-items:flex-end">
+        ${apsPct!=null?`<div class="aps-meter"><div class="aps-bar-wrap"><div class="aps-bar-fill ${apsClass}" style="width:${apsPct}%"></div></div><span class="aps-text">${apsPct}%</span></div>`:''}
+        <div style="display:flex;gap:.4rem">
+          <button class="btn btn-ghost btn-sm save-btn" data-id="${r.programme_id}" title="Save"><i class="fa fa-heart"></i></button>
+          <a href="programmes.html?id=${r.programme_id}" class="btn btn-outline btn-sm" onclick="event.stopPropagation()" title="Details"><i class="fa fa-external-link-alt"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="rc-expand">${reqHtml}</div>
+  </div>`;
+}
+
+function updateCompareBar() {
+  const bar=document.getElementById('compareBar');const items=document.getElementById('compareItems');
+  if(!compareSet.size){bar.classList.remove('show');return;}
+  bar.classList.add('show');
+  items.innerHTML=[...compareSet.entries()].map(([id,{name}])=>`<div class="compare-pill">${name.length>25?name.slice(0,25)+'…':name}<button onclick="window._removeCompare('${id}')"><i class="fa fa-times"></i></button></div>`).join('');
+}
+
+window._removeCompare=id=>{compareSet.delete(id);const cb=document.querySelector(`.compare-cb[data-id="${id}"]`);if(cb)cb.checked=false;updateCompareBar()};
+init();
+</script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

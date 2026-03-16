@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — APS</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .admin-badge{display:inline-block;padding:.25rem .75rem;border-radius:999px;font-size:.75rem;font-weight:700;background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25);margin-left:.5rem;vertical-align:middle}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;display:flex;gap:1rem;align-items:center;transition:.2s}
+    .stat-card:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px)}
+    .stat-icon{width:48px;height:48px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+    .stat-num{font-size:1.75rem;font-weight:800;line-height:1;font-family:'Space Grotesk',sans-serif}
+    .stat-label{font-size:.8rem;color:var(--text-dim);margin-top:.15rem}
+    .tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;overflow-x:auto;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab-btn{padding:.65rem 1.2rem;border:none;background:none;color:var(--text-dim);cursor:pointer;font-size:.88rem;font-weight:500;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
+    .tab-btn:hover{color:var(--text)}
+    .tab-btn.active{color:var(--primary);border-bottom-color:var(--primary)}
+    .tab-pane{display:none}
+    .tab-pane.active{display:block;animation:fadeInUp .25s ease}
+    .data-table{width:100%;border-collapse:collapse;font-size:.85rem}
+    .data-table th{text-align:left;padding:.6rem .9rem;border-bottom:2px solid var(--border);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);white-space:nowrap}
+    .data-table td{padding:.6rem .9rem;border-bottom:1px solid var(--border);vertical-align:middle}
+    .data-table tr:last-child td{border-bottom:none}
+    .data-table tr:hover td{background:rgba(255,255,255,.02)}
+    .table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+    .table-scroll{overflow-x:auto}
+    .role-badge{padding:.2rem .55rem;border-radius:999px;font-size:.73rem;font-weight:600}
+    .role-badge.student{background:rgba(59,130,246,.1);color:var(--primary)}
+    .role-badge.admin{background:rgba(239,68,68,.1);color:var(--danger)}
+    .role-badge.staff{background:rgba(16,185,129,.1);color:var(--secondary)}
+    .search-bar-sm{padding:.5rem .85rem .5rem 2.2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text);font-size:.85rem;width:260px}
+    .search-bar-sm:focus{outline:none;border-color:var(--primary)}
+    .activity-item{display:flex;gap:.75rem;padding:.9rem 0;border-bottom:1px solid var(--border)}
+    .activity-item:last-child{border-bottom:none}
+    .activity-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:.35rem}
+    .activity-action{font-size:.88rem;font-weight:500}
+    .activity-meta{font-size:.78rem;color:var(--text-dim);margin-top:.15rem}
+    .access-denied{text-align:center;padding:4rem 2rem}
+  </style>
+</head>
+<body>
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div id="toast-container"></div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-logo">
+    <img src="/assets/img/logo-icon.svg" style="width:38px;height:38px;flex-shrink:0">
+    <div><div class="logo-text">APS</div><div class="logo-sub">Admin Panel</div></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="dashboard.html" class="nav-link"><i class="fa fa-tachometer-alt nav-icon"></i>Dashboard</a>
+    <a href="eligibility.html" class="nav-link"><i class="fa fa-check-circle nav-icon"></i>Check Eligibility</a>
+    <div class="nav-section-label">Explore</div>
+    <a href="universities.html" class="nav-link"><i class="fa fa-university nav-icon"></i>Universities</a>
+    <a href="programmes.html" class="nav-link"><i class="fa fa-book-open nav-icon"></i>Programmes</a>
+    <div class="nav-section-label">Admin</div>
+    <a href="admin.html" class="nav-link active"><i class="fa fa-shield-alt nav-icon"></i>Admin Panel</a>
+    <div class="nav-section-label">Account</div>
+    <a href="profile.html" class="nav-link"><i class="fa fa-user nav-icon"></i>Profile</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-ghost w-full" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+  </div>
+</aside>
+<div class="layout">
+  <header class="topbar">
+    <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+    <div class="topbar-title">Admin Panel <span class="admin-badge">ADMIN</span></div>
+    <div class="topbar-actions">
+      <button class="topbar-icon" id="themeToggle"><i class="fa fa-moon"></i></button>
+      <a href="profile.html" class="topbar-avatar" id="topbarAvatar">A</a>
+    </div>
+  </header>
+  <main class="main-content">
+    <div id="accessDenied" class="access-denied" style="display:none">
+      <div style="font-size:3rem;margin-bottom:1rem">🔒</div>
+      <h2>Access Denied</h2>
+      <p style="color:var(--text-dim);margin-bottom:1.5rem">You need admin privileges to access this panel.</p>
+      <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+    </div>
+    <div id="adminContent" style="display:none">
+      <div class="stat-grid" id="statsGrid" style="animation:fadeInUp .3s ease">
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(59,130,246,.12);color:var(--primary)"><i class="fa fa-users"></i></div><div><div class="stat-num" id="sUsers">–</div><div class="stat-label">Total Users</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.12);color:var(--secondary)"><i class="fa fa-graduation-cap"></i></div><div><div class="stat-num" id="sProgs">–</div><div class="stat-label">Programmes</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.12);color:var(--warning)"><i class="fa fa-chart-line"></i></div><div><div class="stat-num" id="sChecks">–</div><div class="stat-label">Eligibility Checks</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(139,92,246,.12);color:#a78bfa"><i class="fa fa-university"></i></div><div><div class="stat-num" id="sInsts">3</div><div class="stat-label">Institutions</div></div></div>
+      </div>
+
+      <div class="tabs" style="animation:fadeInUp .3s .05s ease both">
+        <button class="tab-btn active" data-tab="users"><i class="fa fa-users" style="margin-right:.4rem"></i>Users</button>
+        <button class="tab-btn" data-tab="activity"><i class="fa fa-history" style="margin-right:.4rem"></i>Activity Log</button>
+        <button class="tab-btn" data-tab="institutions"><i class="fa fa-university" style="margin-right:.4rem"></i>Institutions</button>
+      </div>
+
+      <!-- Users Tab -->
+      <div class="tab-pane active" id="tab-users">
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap">
+          <div style="position:relative;flex:1;min-width:200px">
+            <i class="fa fa-search" style="position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--text-dim)"></i>
+            <input class="search-bar-sm" style="width:100%" id="userSearch" placeholder="Search users…">
+          </div>
+          <select class="filter-select" id="roleFilter" style="padding:.5rem .8rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text)">
+            <option value="">All Roles</option>
+            <option value="student">Students</option>
+            <option value="admin">Admins</option>
+            <option value="staff">Staff</option>
+          </select>
+        </div>
+        <div class="table-wrap"><div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Country</th><th>Joined</th><th>Actions</th></tr></thead>
+            <tbody id="usersTableBody"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-dim)"><div class="spinner" style="width:1.5rem;height:1.5rem;margin:0 auto"></div></td></tr></tbody>
+          </table>
+        </div></div>
+      </div>
+
+      <!-- Activity Tab -->
+      <div class="tab-pane" id="tab-activity">
+        <div class="table-wrap"><div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>User</th><th>Action</th><th>Entity</th><th>IP</th><th>Time</th></tr></thead>
+            <tbody id="activityTableBody"><tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-dim)">Select this tab to load logs.</td></tr></tbody>
+          </table>
+        </div></div>
+      </div>
+
+      <!-- Institutions Tab -->
+      <div class="tab-pane" id="tab-institutions">
+        <div class="table-wrap"><div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Institution</th><th>Type</th><th>Location</th><th>Grading</th><th>Local Fee</th><th>Status</th></tr></thead>
+            <tbody id="instsTableBody"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-dim)">Select this tab to load.</td></tr></tbody>
+          </table>
+        </div></div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="module">
+import { apiFetch, getUser, clearToken, setTheme, getTheme, showToast, isLoggedIn } from '/assets/js/api.js';
+
+if(!isLoggedIn()){window.location.href='/login.html';}
+
+let allUsers=[];
+
+async function init(){
+  const theme=getTheme();document.documentElement.dataset.theme=theme;
+  document.getElementById('themeToggle').querySelector('i').className=theme==='dark'?'fa fa-sun':'fa fa-moon';
+  const user=getUser();
+  if(!user||user.role!=='admin'){document.getElementById('accessDenied').style.display='block';return;}
+  document.getElementById('adminContent').style.display='block';
+  if(user.profile_photo_url){const av=document.getElementById('topbarAvatar');av.innerHTML=`<img src="${user.profile_photo_url}" style="width:32px;height:32px;border-radius:50%;object-fit:cover">`;}
+  document.getElementById('menuToggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('show')});
+  document.getElementById('sidebar-overlay').addEventListener('click',()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('show')});
+  document.getElementById('themeToggle').addEventListener('click',()=>{const t=getTheme()==='dark'?'light':'dark';setTheme(t);document.documentElement.dataset.theme=t;document.getElementById('themeToggle').querySelector('i').className=t==='dark'?'fa fa-sun':'fa fa-moon'});
+  document.getElementById('logoutBtn').addEventListener('click',()=>{clearToken();window.location.href='/login.html'});
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',function(){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));this.classList.add('active');document.getElementById('tab-'+this.dataset.tab).classList.add('active');loadTabData(this.dataset.tab)});
+  });
+  document.getElementById('userSearch').addEventListener('input',renderUsers);
+  document.getElementById('roleFilter').addEventListener('change',renderUsers);
+  await loadStats();
+  await loadUsers();
+}
+
+async function loadStats(){
+  try{
+    const [ud,pd]=await Promise.all([apiFetch('/admin/stats'),apiFetch('/programmes?limit=1')]);
+    if(ud.success){document.getElementById('sUsers').textContent=ud.stats.total_users||0;document.getElementById('sChecks').textContent=ud.stats.total_checks||0;}
+    if(pd.success){document.getElementById('sProgs').textContent=pd.count||0;}
+  }catch(e){console.error(e);}
+}
+
+async function loadUsers(){
+  try{const data=await apiFetch('/admin/users');allUsers=data.users||[];renderUsers();}
+  catch(e){document.getElementById('usersTableBody').innerHTML=`<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--danger)">Failed to load users.</td></tr>`;}
+}
+
+function renderUsers(){
+  const q=document.getElementById('userSearch').value.toLowerCase();
+  const rf=document.getElementById('roleFilter').value;
+  const filtered=allUsers.filter(u=>(!q||(u.full_name||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q))&&(!rf||u.role===rf));
+  const tb=document.getElementById('usersTableBody');
+  if(!filtered.length){tb.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-dim)">No users found.</td></tr>`;return;}
+  tb.innerHTML=filtered.map(u=>`<tr>
+    <td><div style="display:flex;align-items:center;gap:.6rem">
+      ${u.profile_photo_url?`<img src="${u.profile_photo_url}" style="width:30px;height:30px;border-radius:50%;object-fit:cover">`:`<div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff">${(u.full_name||u.email||'?')[0].toUpperCase()}</div>`}
+      <div><div style="font-weight:600;font-size:.88rem">${u.full_name||'—'}</div>${u.school_name?`<div style="font-size:.75rem;color:var(--text-dim)">${u.school_name}</div>`:''}</div>
+    </div></td>
+    <td style="color:var(--text-dim);font-size:.85rem">${u.email}</td>
+    <td><span class="role-badge ${u.role}">${u.role}</span></td>
+    <td style="font-size:.85rem">${u.country||'—'}</td>
+    <td style="font-size:.82rem;color:var(--text-dim)">${new Date(u.created_at).toLocaleDateString()}</td>
+    <td>
+      <select style="padding:.25rem .5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:.8rem" onchange="window._setRole(${u.user_id},this.value,this)" title="Change role">
+        ${['student','staff','admin'].map(r=>`<option value="${r}" ${u.role===r?'selected':''}>${r}</option>`).join('')}
+      </select>
+    </td>
+  </tr>`).join('');
+
+  window._setRole=async(id,role,sel)=>{
+    const orig=allUsers.find(u=>u.user_id===id)?.role;
+    try{const d=await apiFetch(`/admin/users/${id}/role`,{method:'PATCH',body:JSON.stringify({role})});if(d.success){showToast('Role updated','success');const u=allUsers.find(u=>u.user_id===id);if(u)u.role=role;}else{showToast(d.message||'Failed','error');sel.value=orig||'student';}}
+    catch{showToast('Error','error');sel.value=orig||'student';}
+  };
+}
+
+function loadTabData(tab){
+  if(tab==='activity') loadActivity();
+  else if(tab==='institutions') loadInstitutions();
+}
+
+async function loadActivity(){
+  const tb=document.getElementById('activityTableBody');
+  tb.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-dim)"><div class="spinner" style="width:1.5rem;height:1.5rem;margin:0 auto"></div></td></tr>`;
+  try{
+    const data=await apiFetch('/admin/logs?limit=50');
+    const logs=data.logs||[];
+    if(!logs.length){tb.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-dim)">No activity logs.</td></tr>`;return;}
+    tb.innerHTML=logs.map(l=>`<tr>
+      <td style="font-size:.85rem">${l.user_id||'Guest'}</td>
+      <td><span style="background:rgba(59,130,246,.1);color:var(--primary);padding:.2rem .5rem;border-radius:4px;font-size:.8rem">${l.action}</span></td>
+      <td style="font-size:.82rem;color:var(--text-dim)">${l.entity_type||'—'} ${l.entity_id?`#${l.entity_id}`:''}</td>
+      <td style="font-size:.8rem;color:var(--text-dim);font-family:monospace">${l.ip_address||'—'}</td>
+      <td style="font-size:.8rem;color:var(--text-dim)">${new Date(l.created_at).toLocaleString()}</td>
+    </tr>`).join('');
+  } catch{tb.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--danger);padding:2rem">Failed to load logs.</td></tr>`;}
+}
+
+async function loadInstitutions(){
+  const tb=document.getElementById('instsTableBody');
+  tb.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-dim)"><div class="spinner" style="width:1.5rem;height:1.5rem;margin:0 auto"></div></td></tr>`;
+  try{
+    const data=await apiFetch('/institutions');
+    const insts=data.data||[];
+    if(!insts.length){tb.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem">No institutions.</td></tr>`;return;}
+    const types={public_university:'Public University',public_polytechnic:'Polytechnic',private_university:'Private University'};
+    const grading={nul_aps:'NUL APS',lp_grade_check:'Grade Check',botho_points:'Botho Points'};
+    tb.innerHTML=insts.map(i=>`<tr>
+      <td><div style="font-weight:600;font-size:.9rem">${i.name}</div><div style="font-size:.78rem;color:var(--text-dim)">${i.institution_id}</div></td>
+      <td style="font-size:.85rem">${types[i.type]||i.type}</td>
+      <td style="font-size:.85rem">${i.location||'—'}</td>
+      <td><span style="font-size:.8rem;background:rgba(16,185,129,.1);color:var(--secondary);padding:.2rem .5rem;border-radius:4px">${grading[i.grading_system]||i.grading_system}</span></td>
+      <td style="font-size:.85rem">${i.app_fee_local?`M ${Number(i.app_fee_local).toLocaleString()}`:'N/A'}</td>
+      <td><span style="padding:.2rem .55rem;border-radius:999px;font-size:.75rem;font-weight:600;background:${i.active?'rgba(16,185,129,.1)':'rgba(239,68,68,.1)'};color:${i.active?'var(--success)':'var(--danger)'}">${i.active?'Active':'Inactive'}</span></td>
+    </tr>`).join('');
+  } catch{tb.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--danger);padding:2rem">Failed to load.</td></tr>`;}
+}
+
+init();
+</script>
+</body>
+</html>

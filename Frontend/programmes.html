@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Programmes — APS</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .search-bar{display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap}
+    .search-input-wrap{flex:1;min-width:240px;position:relative}
+    .search-input-wrap i{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--text-dim);pointer-events:none}
+    .search-input{width:100%;padding:.65rem .9rem .65rem 2.4rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);color:var(--text);font-size:.9rem;transition:.2s}
+    .search-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+    .filter-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center}
+    .filter-select{padding:.5rem .8rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text);font-size:.85rem;cursor:pointer}
+    .filter-select:focus{outline:none;border-color:var(--primary)}
+    .prog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+    .prog-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+    .prog-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary));transform:scaleX(0);transition:.3s}
+    .prog-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3);border-color:rgba(255,255,255,.12)}
+    .prog-card:hover::after{transform:scaleX(1)}
+    .prog-card.selected{border-color:var(--primary);box-shadow:0 0 0 2px rgba(59,130,246,.2)}
+    .prog-inst{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--primary);font-weight:600;margin-bottom:.4rem}
+    .prog-name{font-weight:700;font-size:.95rem;line-height:1.35;margin-bottom:.5rem}
+    .prog-faculty{font-size:.8rem;color:var(--text-dim);margin-bottom:.75rem}
+    .prog-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.75rem}
+    .prog-tag{padding:.2rem .55rem;border-radius:999px;font-size:.72rem;font-weight:600;background:rgba(255,255,255,.06);border:1px solid var(--border)}
+    .prog-footer{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--text-dim)}
+    .prog-fee{font-weight:600;color:var(--text)}
+
+    .detail-panel{position:fixed;top:0;right:0;bottom:0;width:480px;max-width:100vw;background:var(--bg);border-left:1px solid var(--border);z-index:300;overflow-y:auto;transform:translateX(100%);transition:.35s cubic-bezier(.34,1.56,.64,1);padding:2rem}
+    .detail-panel.open{transform:translateX(0)}
+    .detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:299;display:none}
+    .detail-overlay.show{display:block}
+    .detail-close{position:absolute;top:1rem;right:1rem;background:var(--surface);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
+    .detail-close:hover{background:var(--border)}
+    .detail-inst-badge{display:inline-block;padding:.3rem .8rem;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.05em;background:rgba(59,130,246,.12);color:var(--primary);margin-bottom:.75rem}
+    .detail-name{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;line-height:1.3;margin-bottom:.5rem}
+    .detail-faculty{color:var(--text-dim);font-size:.88rem;margin-bottom:1.25rem}
+    .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem}
+    .detail-cell{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:.75rem}
+    .detail-cell-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);margin-bottom:.2rem}
+    .detail-cell-value{font-size:.9rem;font-weight:600}
+    .detail-section{margin-bottom:1.25rem}
+    .detail-section-title{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+    .req-row{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+    .req-row:last-child{border-bottom:none}
+    .req-grade{padding:.2rem .5rem;border-radius:4px;font-size:.75rem;font-weight:700;background:rgba(59,130,246,.12);color:var(--primary)}
+    .req-req{font-size:.75rem;color:var(--warning)}
+
+    .results-count{font-size:.85rem;color:var(--text-dim);margin-bottom:.75rem}
+    .compare-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(5,11,24,.96);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;z-index:200;transform:translateY(100%);transition:.3s cubic-bezier(.34,1.56,.64,1)}
+    .compare-bar.show{transform:translateY(0)}
+    .compare-pill{padding:.3rem .7rem;background:rgba(59,130,246,.15);border:1px solid var(--primary);border-radius:999px;font-size:.8rem;display:flex;align-items:center;gap:.4rem}
+    .compare-pill button{background:none;border:none;color:var(--danger);cursor:pointer;padding:0;line-height:1}
+    @media(max-width:900px){.prog-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.prog-grid{grid-template-columns:1fr}.detail-panel{width:100%}}
+  </style>
+</head>
+<body>
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div id="toast-container"></div>
+<div class="detail-overlay" id="detailOverlay"></div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-logo">
+    <img src="/assets/img/logo-icon.svg" style="width:38px;height:38px;flex-shrink:0">
+    <div><div class="logo-text">APS</div><div class="logo-sub">Eligibility System</div></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="dashboard.html" class="nav-link"><i class="fa fa-tachometer-alt nav-icon"></i>Dashboard</a>
+    <a href="eligibility.html" class="nav-link"><i class="fa fa-check-circle nav-icon"></i>Check Eligibility</a>
+    <a href="results.html" class="nav-link"><i class="fa fa-chart-bar nav-icon"></i>Results</a>
+    <div class="nav-section-label">Explore</div>
+    <a href="universities.html" class="nav-link"><i class="fa fa-university nav-icon"></i>Universities</a>
+    <a href="programmes.html" class="nav-link active"><i class="fa fa-book-open nav-icon"></i>Programmes</a>
+    <div class="nav-section-label">Account</div>
+    <a href="profile.html" class="nav-link"><i class="fa fa-user nav-icon"></i>Profile</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-ghost w-full" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+  </div>
+</aside>
+<div class="layout">
+  <header class="topbar">
+    <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+    <div class="topbar-title">Browse Programmes</div>
+    <div class="topbar-actions">
+      <button class="topbar-icon" id="themeToggle"><i class="fa fa-moon"></i></button>
+      <a href="profile.html" class="topbar-avatar" id="topbarAvatar">?</a>
+    </div>
+  </header>
+  <main class="main-content">
+    <div class="search-bar" style="animation:fadeInUp .3s ease">
+      <div class="search-input-wrap">
+        <i class="fa fa-search"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search programmes, faculties…">
+      </div>
+      <button class="btn btn-primary" id="searchBtn"><i class="fa fa-search"></i> Search</button>
+    </div>
+    <div class="filter-row" style="animation:fadeInUp .3s .05s ease both">
+      <select class="filter-select" id="filterInst">
+        <option value="">All Universities</option>
+        <option value="NUL">NUL</option>
+        <option value="LP">Lerotholi Polytechnic</option>
+        <option value="BU">Botho University</option>
+      </select>
+      <select class="filter-select" id="filterQual">
+        <option value="">All Qualifications</option>
+        <option value="degree">Degree</option>
+        <option value="diploma">Diploma</option>
+        <option value="certificate">Certificate</option>
+        <option value="honours">Honours</option>
+      </select>
+      <select class="filter-select" id="filterEntry">
+        <option value="">All Entry Types</option>
+        <option value="direct">Direct Entry</option>
+        <option value="indirect">Bridging</option>
+        <option value="rpl">RPL</option>
+        <option value="odl">Distance Learning</option>
+      </select>
+      <button class="btn btn-ghost btn-sm" id="clearFilters"><i class="fa fa-times"></i> Clear</button>
+    </div>
+    <div class="results-count" id="resultsCount" style="animation:fadeInUp .3s .1s ease both"></div>
+    <div id="progGrid" class="prog-grid" style="animation:fadeInUp .3s .15s ease both">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-dim)">
+        <div class="spinner" style="width:2rem;height:2rem;margin:0 auto 1rem"></div>
+        Loading programmes…
+      </div>
+    </div>
+    <div style="height:80px"></div>
+  </main>
+</div>
+<div class="detail-panel" id="detailPanel">
+  <button class="detail-close" id="detailClose"><i class="fa fa-times"></i></button>
+  <div id="detailContent"><p style="color:var(--text-dim);margin-top:3rem;text-align:center">Select a programme to see details.</p></div>
+</div>
+<div class="compare-bar" id="compareBar">
+  <div><div style="font-weight:600;font-size:.9rem;margin-bottom:.3rem">Compare Programmes</div><div style="display:flex;gap:.5rem;flex-wrap:wrap" id="compareItems"></div></div>
+  <button class="btn btn-primary" id="doCompareBtn"><i class="fa fa-columns"></i> Compare</button>
+</div>
+<script type="module">
+import { apiFetch, getUser, clearToken, setTheme, getTheme, showToast, isLoggedIn } from '/assets/js/api.js';
+const compareSet = new Map();
+let programmes = [];
+
+async function init() {
+  const theme=getTheme();document.documentElement.dataset.theme=theme;
+  document.getElementById('themeToggle').querySelector('i').className=theme==='dark'?'fa fa-sun':'fa fa-moon';
+  const user=getUser();
+  if(user){const av=document.getElementById('topbarAvatar');if(user.profile_photo_url)av.innerHTML=`<img src="${user.profile_photo_url}" style="width:32px;height:32px;border-radius:50%;object-fit:cover">`;else av.textContent=(user.full_name||user.email||'?')[0].toUpperCase();}
+  document.getElementById('menuToggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('show')});
+  document.getElementById('sidebar-overlay').addEventListener('click',()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('show')});
+  document.getElementById('themeToggle').addEventListener('click',()=>{const t=getTheme()==='dark'?'light':'dark';setTheme(t);document.documentElement.dataset.theme=t;document.getElementById('themeToggle').querySelector('i').className=t==='dark'?'fa fa-sun':'fa fa-moon'});
+  document.getElementById('logoutBtn').addEventListener('click',()=>{clearToken();window.location.href='/login.html'});
+  document.getElementById('detailClose').addEventListener('click',closeDetail);
+  document.getElementById('detailOverlay').addEventListener('click',closeDetail);
+  document.getElementById('searchBtn').addEventListener('click',loadProgrammes);
+  document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')loadProgrammes()});
+  document.getElementById('clearFilters').addEventListener('click',()=>{document.getElementById('searchInput').value='';document.getElementById('filterInst').value='';document.getElementById('filterQual').value='';document.getElementById('filterEntry').value='';loadProgrammes()});
+  document.getElementById('doCompareBtn').addEventListener('click',()=>{window.location.href=`/compare.html?ids=${[...compareSet.keys()].join(',')}`});
+  const params=new URLSearchParams(location.search);
+  const pid=params.get('id');
+  await loadProgrammes();
+  if(pid){const prog=programmes.find(p=>p.programme_id===pid.toUpperCase());if(prog)openDetail(prog.programme_id);}
+}
+
+async function loadProgrammes() {
+  const search=document.getElementById('searchInput').value;
+  const institution=document.getElementById('filterInst').value;
+  const qual_type=document.getElementById('filterQual').value;
+  const entry_type=document.getElementById('filterEntry').value;
+  const qs=new URLSearchParams();
+  if(search)qs.set('search',search);if(institution)qs.set('institution',institution);
+  if(qual_type)qs.set('qual_type',qual_type);if(entry_type)qs.set('entry_type',entry_type);
+  qs.set('limit','200');
+  document.getElementById('progGrid').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-dim)"><div class="spinner" style="width:2rem;height:2rem;margin:0 auto 1rem"></div>Loading…</div>`;
+  try {
+    const data=await apiFetch(`/programmes?${qs.toString()}`);
+    programmes=data.data||[];
+    document.getElementById('resultsCount').textContent=`${programmes.length} programme${programmes.length!==1?'s':''} found`;
+    renderGrid();
+  } catch(e){document.getElementById('progGrid').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--danger)"><i class="fa fa-exclamation-circle" style="font-size:2rem;margin-bottom:.75rem;display:block"></i>Failed to load programmes. Is the server running?</div>`;}
+}
+
+function renderGrid() {
+  const el=document.getElementById('progGrid');
+  if(!programmes.length){el.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-dim)"><i class="fa fa-search" style="font-size:2.5rem;opacity:.3;margin-bottom:1rem;display:block"></i><p>No programmes found. Try different filters.</p></div>`;return;}
+  const quals={degree:'🎓',diploma:'📜',certificate:'📋',honours:'⭐'};
+  const insts={NUL:'🏛️ NUL',LP:'🏗️ Lerotholi Polytechnic',BU:'💼 Botho University'};
+  el.innerHTML=programmes.map((p,i)=>`
+    <div class="prog-card ${compareSet.has(p.programme_id)?'selected':''}" data-id="${p.programme_id}" style="animation:cardReveal .25s ${i*0.03}s ease both" onclick="window._openDetail('${p.programme_id}')">
+      <div class="prog-inst">${insts[p.institution_id]||p.institution_name}</div>
+      <div class="prog-name">${p.programme_name}</div>
+      <div class="prog-faculty"><i class="fa fa-layer-group" style="margin-right:.3rem;opacity:.5"></i>${p.faculty_name}</div>
+      <div class="prog-tags">
+        <span class="prog-tag">${quals[p.qualification_type]||''} ${p.qualification_type}</span>
+        <span class="prog-tag">${p.duration_years} yr</span>
+        <span class="prog-tag">${p.entry_type}</span>
+        ${p.is_gateway_prog?'<span class="prog-tag" style="background:rgba(245,158,11,.1);color:var(--warning);border-color:rgba(245,158,11,.2)">🚪 Gateway</span>':''}
+      </div>
+      <div class="prog-footer">
+        <span class="prog-fee">${p.fee_local?`M ${Number(p.fee_local).toLocaleString()}/yr`:'Fee N/A'}</span>
+        <label onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;cursor:pointer">
+          <input type="checkbox" ${compareSet.has(p.programme_id)?'checked':''} style="accent-color:var(--primary)" onchange="window._toggleCompare('${p.programme_id}','${p.programme_name.replace(/'/g,'&apos;')}',event)">
+          Compare
+        </label>
+      </div>
+    </div>`).join('');
+}
+
+async function openDetail(pid) {
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('detailOverlay').classList.add('show');
+  document.getElementById('detailContent').innerHTML=`<div style="text-align:center;padding:3rem;color:var(--text-dim)"><div class="spinner" style="width:1.5rem;height:1.5rem;margin:0 auto 1rem"></div>Loading…</div>`;
+  try {
+    const data=await apiFetch(`/programmes/${pid}`);
+    const p=data.data;
+    const reqs=p.requirements||[];const thr=p.threshold;
+    const quals={degree:'🎓 Degree',diploma:'📜 Diploma',certificate:'📋 Certificate',honours:'⭐ Honours'};
+    const entries={direct:'Direct Entry',indirect:'Bridging',rpl:'RPL',odl:'Distance Learning'};
+    document.getElementById('detailContent').innerHTML=`
+      <div class="detail-inst-badge">${p.institution_name}</div>
+      <div class="detail-name">${p.programme_name}</div>
+      <div class="detail-faculty"><i class="fa fa-layer-group" style="margin-right:.4rem;opacity:.5"></i>${p.faculty_name}</div>
+      <div class="detail-grid">
+        <div class="detail-cell"><div class="detail-cell-label">Qualification</div><div class="detail-cell-value">${quals[p.qualification_type]||p.qualification_type}</div></div>
+        <div class="detail-cell"><div class="detail-cell-label">Duration</div><div class="detail-cell-value">${p.duration_years} years</div></div>
+        <div class="detail-cell"><div class="detail-cell-label">Entry Type</div><div class="detail-cell-value">${entries[p.entry_type]||p.entry_type}</div></div>
+        <div class="detail-cell"><div class="detail-cell-label">Min. Subjects</div><div class="detail-cell-value">${p.min_subjects_req}</div></div>
+        ${p.fee_local?`<div class="detail-cell"><div class="detail-cell-label">Local Fee/yr</div><div class="detail-cell-value">M ${Number(p.fee_local).toLocaleString()}</div></div>`:''}
+        ${p.fee_intl?`<div class="detail-cell"><div class="detail-cell-label">Intl Fee/yr</div><div class="detail-cell-value">M ${Number(p.fee_intl).toLocaleString()}</div></div>`:''}
+        ${p.has_portfolio?'<div class="detail-cell"><div class="detail-cell-label">Portfolio</div><div class="detail-cell-value">✅ Required</div></div>':''}
+        ${p.has_interview?'<div class="detail-cell"><div class="detail-cell-label">Interview</div><div class="detail-cell-value">✅ Required</div></div>':''}
+      </div>
+      ${thr?`<div class="detail-section"><div class="detail-section-title"><i class="fa fa-calculator"></i>APS Threshold</div>
+        <div class="detail-grid">
+          ${thr.aps_min!=null?`<div class="detail-cell"><div class="detail-cell-label">Min APS</div><div class="detail-cell-value">${thr.aps_min}</div></div>`:''}
+          ${thr.aps_max!=null?`<div class="detail-cell"><div class="detail-cell-label">Max APS</div><div class="detail-cell-value">${thr.aps_max}</div></div>`:''}
+          ${thr.min_credits_count!=null?`<div class="detail-cell"><div class="detail-cell-label">Min Credits</div><div class="detail-cell-value">${thr.min_credits_count}</div></div>`:''}
+          ${thr.min_pass_count!=null?`<div class="detail-cell"><div class="detail-cell-label">Min Passes</div><div class="detail-cell-value">${thr.min_pass_count}</div></div>`:''}
+        </div>
+        ${thr.notes?`<p style="font-size:.82rem;color:var(--text-dim)">${thr.notes}</p>`:''}
+      </div>`:''}
+      ${reqs.length?`<div class="detail-section"><div class="detail-section-title"><i class="fa fa-list-check"></i>Subject Requirements (${reqs.length})</div>
+        ${reqs.map(r=>`<div class="req-row">
+          <span>${r.subject_id||'See note'} ${!r.is_compulsory?'<span class="req-req">(Optional)</span>':''}</span>
+          <span class="req-grade">${r.min_grade}+</span>
+        </div>`).join('')}
+      </div>`:''}
+      ${p.description?`<div class="detail-section"><div class="detail-section-title"><i class="fa fa-info-circle"></i>About</div><p style="font-size:.88rem;line-height:1.7;color:var(--text-dim)">${p.description}</p></div>`:''}
+      ${p.career_prospects?`<div class="detail-section"><div class="detail-section-title"><i class="fa fa-briefcase"></i>Career Prospects</div><p style="font-size:.88rem;line-height:1.7;color:var(--text-dim)">${p.career_prospects}</p></div>`:''}
+      <div style="display:flex;gap:.75rem;margin-top:1rem">
+        <button class="btn btn-primary w-full" onclick="window.location.href='/eligibility.html'"><i class="fa fa-check-circle"></i> Check My Eligibility</button>
+        <button class="btn btn-outline" id="saveDetailBtn" onclick="window._saveDetail('${p.programme_id}')"><i class="fa fa-heart"></i></button>
+      </div>`;
+  } catch(e){document.getElementById('detailContent').innerHTML=`<p style="color:var(--danger);margin-top:2rem">Failed to load details.</p>`;}
+}
+
+function closeDetail(){document.getElementById('detailPanel').classList.remove('open');document.getElementById('detailOverlay').classList.remove('show')}
+
+window._openDetail=openDetail;
+window._toggleCompare=(id,name,e)=>{
+  e.stopPropagation();
+  if(e.target.checked){if(compareSet.size>=3){e.target.checked=false;showToast('Max 3 programmes','warning');return;}compareSet.set(id,{name})}else compareSet.delete(id);
+  updateCompareBar();
+  document.querySelector(`[data-id="${id}"]`)?.classList.toggle('selected',compareSet.has(id));
+};
+window._saveDetail=async(id)=>{
+  if(!isLoggedIn()){window.location.href='/login.html';return;}
+  try{await apiFetch(`/users/saved/${id}`,{method:'POST'});showToast('Programme saved!','success')}catch{showToast('Could not save.','error')}
+};
+
+function updateCompareBar(){
+  const bar=document.getElementById('compareBar');const items=document.getElementById('compareItems');
+  if(!compareSet.size){bar.classList.remove('show');return;}
+  bar.classList.add('show');
+  items.innerHTML=[...compareSet.entries()].map(([id,{name}])=>`<div class="compare-pill">${name.length>25?name.slice(0,25)+'…':name}<button onclick="window._removeCompare('${id}')"><i class="fa fa-times"></i></button></div>`).join('');
+}
+window._removeCompare=id=>{compareSet.delete(id);const el=document.querySelector(`[data-id="${id}"]`);if(el){el.classList.remove('selected');const cb=el.querySelector('input[type=checkbox]');if(cb)cb.checked=false;}updateCompareBar()};
+
+init();
+</script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

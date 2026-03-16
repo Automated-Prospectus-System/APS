@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@apssystem.com",
+      "password_hash": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+      "name": "Administrator",
+      "role": "admin",
+      "created_at": "2026-03-10T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "username": "student1",
+      "email": "student1@apssystem.com",
+      "password_hash": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+      "name": "John Student",
+      "role": "student",
+      "created_at": "2026-03-10T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "username": "student2",
+      "email": "student2@apssystem.com",
+      "password_hash": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+      "name": "Jane Scholar",
+      "role": "student",
+      "created_at": "2026-03-10T00:00:00Z"
+    }
+  ],
+  "note": "All passwords are 'password123' - change in production!"
+}

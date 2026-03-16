@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 60" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.12"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+
+  <!-- Hexagon icon -->
+  <g transform="translate(4,4)">
+    <polygon points="26,1 49,13.5 49,38.5 26,51 3,38.5 3,13.5" fill="url(#g3)" stroke="url(#g2)" stroke-width="1" opacity="0.8"/>
+    <polygon points="26,17 40,22.5 26,28 12,22.5" fill="url(#g1)" filter="url(#glow)"/>
+    <path d="M14 24 L14 33 Q26 38 38 33 L38 24" stroke="url(#g1)" stroke-width="1.6" fill="none" stroke-linejoin="round" opacity="0.9"/>
+    <line x1="40" y1="22.5" x2="40" y2="30" stroke="url(#g1)" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="40" cy="31.5" r="2" fill="url(#g1)"/>
+    <g transform="translate(42,8)" opacity="0.75">
+      <line x1="0" y1="-2.5" x2="0" y2="2.5" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="-2.5" y1="0" x2="2.5" y2="0" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- APS wordmark -->
+  <text x="70" y="37" font-family="'Space Grotesk','Inter',sans-serif" font-weight="800" font-size="28" letter-spacing="-1" fill="url(#g2)" filter="url(#glow)">APS</text>
+
+  <!-- Separator dot -->
+  <circle cx="136" cy="30" r="2.5" fill="url(#g1)" opacity="0.6"/>
+
+  <!-- Tagline -->
+  <text x="145" y="27" font-family="'Inter',sans-serif" font-weight="600" font-size="9" letter-spacing="0.5" fill="#60a5fa">AUTOMATIC</text>
+  <text x="145" y="38" font-family="'Inter',sans-serif" font-weight="600" font-size="9" letter-spacing="0.5" fill="#34d399">PROSPECTUS</text>
+  <text x="145" y="49" font-family="'Inter',sans-serif" font-weight="500" font-size="8" letter-spacing="0.3" fill="#64748b">ELIGIBILITY SYSTEM</text>
+</svg>

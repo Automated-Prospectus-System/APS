@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APS - Academic Programmes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .content-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+        }
+
+        .results-count {
+            font-size: 0.88rem;
+            color: var(--muted-text);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .no-programs {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted-text);
+            grid-column: 1/-1;
+        }
+
+        .no-programs i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: block;
+            color: #cbd5e1;
+        }
+
+        .search-input-wrap {
+            position: relative;
+            grid-column: 1 / -1;
+        }
+
+        .search-input-wrap i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-text);
+            font-size: 0.9rem;
+        }
+
+        .search-input-wrap input {
+            width: 100%;
+            padding: 10px 12px 10px 38px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-input-wrap input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(30,91,168,0.1);
+        }
+
+        .score-filter-banner {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid var(--success);
+            border-radius: var(--radius-lg);
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            color: #065f46;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeInDown 0.4s ease;
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .program-card {
+            animation: cardEntrance 0.4s ease both;
+        }
+
+        .duration-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255,165,0,0.12);
+            color: #92400e;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid rgba(255,165,0,0.3);
+        }
+
+        .field-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(99,102,241,0.1);
+            color: #3730a3;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid rgba(99,102,241,0.2);
+        }
+
+        .qual-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0,61,122,0.08);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid rgba(0,61,122,0.15);
+        }
+
+        @media (max-width: 480px) {
+            .content-section { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon"><i class="fas fa-graduation-cap"></i></div>
+                <span>APS &mdash; Automatic Prospectus System</span>
+            </div>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="home.html" style="color:rgba(255,255,255,0.85);text-decoration:none;display:flex;align-items:center;gap:6px;font-weight:500;">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="programs.html" style="color:white;text-decoration:none;display:flex;align-items:center;gap:6px;font-weight:700;border-bottom:2px solid #ffa500;padding-bottom:2px;">
+                    <i class="fas fa-book-open"></i> Programmes
+                </a>
+                <a href="universities.html" style="color:rgba(255,255,255,0.85);text-decoration:none;display:flex;align-items:center;gap:6px;font-weight:500;">
+                    <i class="fas fa-university"></i> Universities
+                </a>
+                <div class="user-info">
+                    <i class="fas fa-user-circle" style="font-size:1.1rem;"></i>
+                    <span id="userDisplay" style="font-weight:600;">Guest</span>
+                    <button class="logout-btn" onclick="AuthManager.logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-book-open"></i> Academic Programmes</h1>
+        <p>Browse all programmes offered at Lesotho higher education institutions</p>
+    </div>
+
+    <!-- Content -->
+    <div class="content-section">
+        <!-- Score banner -->
+        <div id="scoreBanner" class="score-filter-banner" style="display:none;"></div>
+
+        <!-- Filters -->
+        <div class="filters-bar animate-on-scroll">
+            <div class="search-input-wrap" style="grid-column:1/-1;">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search programmes..." oninput="filterPrograms()">
+            </div>
+            <div class="filter-group">
+                <label><i class="fas fa-layer-group"></i> Field of Study</label>
+                <select id="fieldFilter" onchange="filterPrograms()">
+                    <option value="">All Fields</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label><i class="fas fa-certificate"></i> Qualification</label>
+                <select id="qualFilter" onchange="filterPrograms()">
+                    <option value="">All Types</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label><i class="fas fa-university"></i> University</label>
+                <select id="universityFilter" onchange="filterPrograms()">
+                    <option value="">All Universities</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label><i class="fas fa-clock"></i> Duration</label>
+                <select id="durationFilter" onchange="filterPrograms()">
+                    <option value="">Any Duration</option>
+                    <option value="1">1 Year</option>
+                    <option value="2">2 Years</option>
+                    <option value="3">3 Years</option>
+                    <option value="4">4 Years</option>
+                    <option value="5">5 Years</option>
+                </select>
+            </div>
+            <div class="filter-group" style="display:flex;align-items:flex-end;">
+                <button onclick="resetFilters()" style="width:100%;padding:9px 12px;background:white;color:var(--primary);border:2px solid var(--primary);border-radius:var(--radius);cursor:pointer;font-weight:700;font-size:0.85rem;transition:var(--transition);"
+                    onmouseover="this.style.background='var(--primary)';this.style.color='white'"
+                    onmouseout="this.style.background='white';this.style.color='var(--primary)'">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+        </div>
+
+        <div class="results-count" id="resultsCount"></div>
+
+        <!-- Programs Grid -->
+        <div id="programsContainer" class="programs-grid stagger-children">
+            <div style="text-align:center;padding:60px;color:var(--muted-text);grid-column:1/-1;">
+                <i class="fas fa-spinner fa-spin" style="font-size:2rem;display:block;margin-bottom:12px;color:var(--primary);"></i>
+                Loading programmes...
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><i class="fas fa-graduation-cap"></i> &copy; 2026 Automatic Prospectus System &mdash; Lesotho Higher Education Guidance Platform</p>
+    </footer>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/script-api.js"></script>
+    <script>
+        protectPage();
+
+        let allPrograms = [];
+        let userScore = null;
+        const MAX_SCORE = 30;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('userDisplay').textContent = AuthManager.getCurrentUser();
+
+            // Check for score param
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('score')) {
+                userScore = parseInt(params.get('score'), 10);
+                const banner = document.getElementById('scoreBanner');
+                banner.style.display = 'flex';
+                banner.innerHTML = `<i class="fas fa-check-circle"></i> Showing programmes for your APS score: <strong>${userScore}/${MAX_SCORE}</strong> — eligible programmes are highlighted.`;
+            }
+
+            try {
+                allPrograms = await fetchPrograms();
+                populateFilters();
+                filterPrograms();
+            } catch (error) {
+                document.getElementById('programsContainer').innerHTML =
+                    '<p style="color:var(--danger);padding:20px;grid-column:1/-1;text-align:center;"><i class="fas fa-exclamation-triangle"></i> Error loading programmes. Please refresh.</p>';
+            }
+
+            initScrollAnimations();
+        });
+
+        function populateFilters() {
+            const fields = [...new Set(allPrograms.map(p => p.field_of_study))].filter(Boolean).sort();
+            const quals = [...new Set(allPrograms.map(p => p.qualification_type))].filter(Boolean).sort();
+            const unis = [...new Set(allPrograms.map(p => p.university))].filter(Boolean).sort();
+
+            const fieldSelect = document.getElementById('fieldFilter');
+            const qualSelect = document.getElementById('qualFilter');
+            const uniSelect = document.getElementById('universityFilter');
+
+            fields.forEach(f => { const o = document.createElement('option'); o.value = f; o.textContent = f; fieldSelect.appendChild(o); });
+            quals.forEach(q => { const o = document.createElement('option'); o.value = q; o.textContent = q; qualSelect.appendChild(o); });
+            unis.forEach(u => { const o = document.createElement('option'); o.value = u; o.textContent = u; uniSelect.appendChild(o); });
+        }
+
+        function filterPrograms() {
+            const field = document.getElementById('fieldFilter').value;
+            const qual = document.getElementById('qualFilter').value;
+            const uni = document.getElementById('universityFilter').value;
+            const dur = document.getElementById('durationFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = allPrograms.filter(p => {
+                const matchField = !field || p.field_of_study === field;
+                const matchQual = !qual || p.qualification_type === qual;
+                const matchUni = !uni || p.university === uni;
+                const matchDur = !dur || String(p.duration_years) === dur;
+                const matchSearch = !search || p.name.toLowerCase().includes(search) ||
+                    (p.description || '').toLowerCase().includes(search) ||
+                    (p.university || '').toLowerCase().includes(search);
+                return matchField && matchQual && matchUni && matchDur && matchSearch;
+            });
+
+            displayPrograms(filtered);
+        }
+
+        function displayPrograms(programs) {
+            const container = document.getElementById('programsContainer');
+            const countEl = document.getElementById('resultsCount');
+            container.innerHTML = '';
+
+            countEl.textContent = `Showing ${programs.length} programme${programs.length !== 1 ? 's' : ''}`;
+
+            if (!programs || programs.length === 0) {
+                container.innerHTML = `
+                    <div class="no-programs">
+                        <i class="fas fa-search-minus"></i>
+                        <p style="font-weight:700;font-size:1.1rem;margin-bottom:8px;">No programmes found</p>
+                        <p>Try adjusting your filters or search terms.</p>
+                    </div>`;
+                return;
+            }
+
+            programs.forEach((prog, idx) => {
+                const isEligible = userScore !== null && prog.minimum_score != null && userScore >= prog.minimum_score;
+
+                // Parse compulsory subjects
+                let compulsory = [];
+                try {
+                    const cs = prog.compulsory_subjects;
+                    compulsory = Array.isArray(cs) ? cs : (typeof cs === 'string' ? JSON.parse(cs) : []);
+                } catch { compulsory = []; }
+
+                const fieldColors = {
+                    'Engineering': '#1e40af', 'IT': '#5b21b6', 'Business': '#065f46',
+                    'Education': '#92400e', 'Science': '#1e3a5f', 'Health Sciences': '#991b1b',
+                    'Law': '#374151', 'Agriculture': '#3f6212', 'Arts': '#7c2d12',
+                    'Humanities': '#4c1d95'
+                };
+                const headerBg = fieldColors[prog.field_of_study] || '#003d7a';
+
+                const card = document.createElement('div');
+                card.className = 'program-card' + (isEligible ? ' eligible' : '');
+                card.style.animationDelay = Math.min(idx, 9) * 0.07 + 's';
+                card.innerHTML = `
+                    <div class="program-header" style="background:linear-gradient(135deg, ${headerBg} 0%, ${headerBg}cc 100%);">
+                        <div class="program-title">
+                            ${prog.name}
+                            ${isEligible ? '<span class="eligible-badge"><i class="fas fa-check"></i> Eligible</span>' : ''}
+                        </div>
+                        <div class="program-university"><i class="fas fa-building"></i> ${prog.university || 'N/A'}</div>
+                    </div>
+                    <div class="program-body">
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+                            <span class="qual-badge"><i class="fas fa-certificate"></i> ${prog.qualification_type || 'N/A'}</span>
+                            <span class="field-badge"><i class="fas fa-layer-group"></i> ${prog.field_of_study || 'N/A'}</span>
+                            <span class="duration-badge"><i class="fas fa-clock"></i> ${prog.duration_years || 'N/A'} Year${prog.duration_years !== 1 ? 's' : ''}</span>
+                        </div>
+                        ${prog.description ? `<p style="font-size:0.8rem;color:var(--muted-text);line-height:1.5;margin-bottom:10px;">${prog.description.substring(0,120)}...</p>` : ''}
+                        <div class="min-score-badge">
+                            <i class="fas fa-chart-bar"></i> Min APS: ${prog.minimum_score != null ? prog.minimum_score + '/' + MAX_SCORE : 'N/A'}
+                        </div>
+                        ${compulsory.length > 0 ? `
+                        <div class="compulsory-section">
+                            <div class="compulsory-label"><i class="fas fa-asterisk"></i> Compulsory Subjects</div>
+                            <div class="compulsory-tags">
+                                ${compulsory.map(s => `<span class="compulsory-tag">${s}</span>`).join('')}
+                            </div>
+                        </div>` : ''}
+                        ${prog.entry_requirement ? `
+                        <details style="margin-top:10px;">
+                            <summary style="font-size:0.78rem;color:var(--primary);cursor:pointer;font-weight:600;user-select:none;">
+                                <i class="fas fa-info-circle"></i> Entry Requirements
+                            </summary>
+                            <p style="font-size:0.78rem;color:var(--muted-text);margin-top:6px;line-height:1.5;padding:8px;background:var(--light-bg);border-radius:8px;">${prog.entry_requirement}</p>
+                        </details>` : ''}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function resetFilters() {
+            document.getElementById('fieldFilter').value = '';
+            document.getElementById('qualFilter').value = '';
+            document.getElementById('universityFilter').value = '';
+            document.getElementById('durationFilter').value = '';
+            document.getElementById('searchInput').value = '';
+            filterPrograms();
+        }
+
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }
+    </script>
+</body>
+</html>

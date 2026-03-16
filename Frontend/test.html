@@ -1,0 +1,13 @@
+<!DOCTYPE html><html><body>
+<div id="out">Testing...</div>
+<script type="module">
+import { apiFetch } from '/assets/js/api.js';
+const el = document.getElementById('out');
+try {
+  const data = await apiFetch('/programmes?limit=5');
+  el.innerHTML = `<b style="color:green">API OK! count=${data.count}, data.length=${(data.data||[]).length}</b><br>First: ${data.data?.[0]?.programme_name||'none'}`;
+} catch(e) {
+  el.innerHTML = `<b style="color:red">ERROR: ${e.message}</b>`;
+}
+</script>
+</body></html>

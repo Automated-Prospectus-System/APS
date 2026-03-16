@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — APS</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#3b82f6">
+<link rel="stylesheet" href="/assets/css/global.css">
+<style>
+.auth-page{min-height:100vh;display:flex}
+.auth-brand{flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 48px;position:relative;overflow:hidden;background:linear-gradient(135deg,#030a1a 0%,#071425 100%)}
+.auth-brand-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(59,130,246,.2) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 100% 0%,rgba(16,185,129,.15) 0%,transparent 60%)}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:orbFloat 12s ease-in-out infinite}
+.orb-1{width:350px;height:350px;background:rgba(59,130,246,.15);top:-80px;left:-80px}
+.orb-2{width:250px;height:250px;background:rgba(16,185,129,.1);bottom:30px;right:-60px;animation-delay:-5s}
+.auth-brand-inner{position:relative;z-index:1;max-width:460px}
+.uni-logos{display:flex;gap:12px;margin-bottom:40px}
+.uni-logo-chip{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--r-full);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);font-size:.8rem;color:rgba(255,255,255,.7);font-weight:600}
+.uni-dot{width:8px;height:8px;border-radius:50%}
+.stats-row{display:flex;gap:24px;margin-top:40px}
+.brand-stat{display:flex;flex-direction:column}
+.brand-stat-n{font-family:var(--font-head);font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--primary-light),var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.brand-stat-l{font-size:.78rem;color:rgba(255,255,255,.45);font-weight:500;margin-top:2px}
+.auth-form-side{width:480px;display:flex;flex-direction:column;justify-content:center;padding:52px 44px;background:rgba(8,15,34,.7);backdrop-filter:blur(24px);border-left:1px solid var(--border-light)}
+@media(max-width:900px){.auth-brand{display:none}.auth-form-side{width:100%;padding:40px 24px;background:var(--bg);border-left:none}}
+</style>
+</head>
+<body>
+<div class="auth-page">
+  <!-- Brand Side -->
+  <div class="auth-brand">
+    <div class="auth-brand-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="auth-brand-inner">
+      <div class="brand-logo-row flex items-center gap-3 mb-4" style="margin-bottom:32px">
+        <img src="/assets/img/logo-icon.svg" style="width:52px;height:52px;filter:drop-shadow(0 0 12px rgba(59,130,246,.5))">
+        <div class="brand-words">
+          <strong>APS</strong>
+          <small>Automatic Prospectus & Eligibility System</small>
+        </div>
+      </div>
+
+      <h1 class="auth-headline">
+        Discover your<br><em>perfect programme</em>
+      </h1>
+      <p class="auth-sub-p">
+        Enter your LGCSE results and instantly see which degree, diploma, or certificate programmes you qualify for at Lesotho's top universities.
+      </p>
+
+      <div class="uni-logos">
+        <div class="uni-logo-chip"><div class="uni-dot" style="background:#3b82f6"></div>NUL</div>
+        <div class="uni-logo-chip"><div class="uni-dot" style="background:#f59e0b"></div>LP</div>
+        <div class="uni-logo-chip"><div class="uni-dot" style="background:#10b981"></div>Botho</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="brand-stat"><span class="brand-stat-n">79+</span><span class="brand-stat-l">Programmes</span></div>
+        <div class="brand-stat"><span class="brand-stat-n">3</span><span class="brand-stat-l">Universities</span></div>
+        <div class="brand-stat"><span class="brand-stat-n">Free</span><span class="brand-stat-l">Forever</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Side -->
+  <div class="auth-form-side">
+    <div class="auth-form-title">Welcome back 👋</div>
+    <div class="auth-form-sub">Sign in to access your eligibility results and saved programmes.</div>
+
+    <button class="google-btn" onclick="handleGoogle()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
+      Continue with Google
+    </button>
+
+    <div class="divider">or sign in with email</div>
+
+    <div id="alert" class="alert error hidden">
+      <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="alert-msg"></span>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label class="form-label">Email address <span class="req">*</span></label>
+        <div class="input-wrap">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <input class="form-input" type="email" id="email" placeholder="your@email.com" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" style="display:flex;justify-content:space-between">
+          <span>Password <span class="req">*</span></span>
+          <a href="#" onclick="showForgot()" style="font-weight:500;color:var(--primary-light);font-size:.8rem">Forgot password?</a>
+        </label>
+        <div class="input-wrap">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input class="form-input" type="password" id="password" placeholder="Your password" autocomplete="current-password" required>
+          <button type="button" class="input-action" onclick="togglePw('password',this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full btn-lg" id="submitBtn" style="margin-top:8px">
+        <span class="btn-lbl">Sign In</span>
+      </button>
+    </form>
+
+    <p class="text-center text-sm mt-4" style="color:var(--text-muted)">
+      Don't have an account? <a href="/register.html" style="color:var(--primary-light);font-weight:600">Create one free</a>
+    </p>
+    <p class="text-center text-xs mt-3" style="color:var(--text-faint)">
+      You can also check eligibility <a href="/eligibility.html" style="color:var(--text-muted)">without an account</a>
+    </p>
+  </div>
+</div>
+
+<!-- Forgot password modal -->
+<div id="forgotModal" class="modal-bg hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Reset Password</h3>
+      <button class="modal-x" onclick="closeForgot()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="text-sm text-muted mb-3">Enter your email and we'll send you a reset link.</p>
+      <div id="forgotAlert" class="alert hidden"></div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" id="forgotEmail" placeholder="your@email.com">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost btn-sm" onclick="closeForgot()">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="forgotBtn" onclick="sendReset()"><span class="btn-lbl">Send Reset Link</span></button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script type="module">
+import { login, googleLogin, forgotPassword, isLoggedIn } from '/assets/js/api.js';
+
+if (isLoggedIn()) window.location.href = '/dashboard.html';
+
+window.handleGoogle = () => googleLogin();
+
+window.togglePw = (id, btn) => {
+  const i = document.getElementById(id);
+  i.type = i.type === 'password' ? 'text' : 'password';
+  btn.style.opacity = i.type === 'text' ? '1' : '0.5';
+};
+
+function showAlert(msg) {
+  const a = document.getElementById('alert');
+  document.getElementById('alert-msg').textContent = msg;
+  a.classList.remove('hidden');
+  a.classList.add('error');
+}
+
+document.getElementById('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const pw    = document.getElementById('password').value;
+  if (!email || !pw) return showAlert('Please enter your email and password.');
+  document.getElementById('alert').classList.add('hidden');
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  try {
+    const res = await login(email, pw);
+    if (res?.success) {
+      window.location.href = '/dashboard.html';
+    } else {
+      showAlert(res?.message || 'Invalid email or password.');
+    }
+  } catch { showAlert('Connection error. Please try again.'); }
+  finally { btn.classList.remove('loading'); }
+});
+
+window.showForgot  = () => document.getElementById('forgotModal').classList.remove('hidden');
+window.closeForgot = () => document.getElementById('forgotModal').classList.add('hidden');
+
+window.sendReset = async () => {
+  const email = document.getElementById('forgotEmail').value.trim();
+  const alert = document.getElementById('forgotAlert');
+  const btn   = document.getElementById('forgotBtn');
+  if (!email) return;
+  btn.classList.add('loading');
+  try {
+    const res = await forgotPassword(email);
+    alert.className = 'alert ' + (res?.success ? 'success' : 'error');
+    alert.textContent = res?.message || (res?.success ? 'Reset link sent!' : 'Error sending reset link.');
+    alert.classList.remove('hidden');
+  } catch { alert.className='alert error'; alert.textContent='Network error.'; alert.classList.remove('hidden'); }
+  finally { btn.classList.remove('loading'); }
+};
+</script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

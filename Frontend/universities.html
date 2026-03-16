@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universities — APS</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .uni-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem}
+    .uni-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:.25s;position:relative}
+    .uni-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.35);border-color:rgba(255,255,255,.12)}
+    .uni-banner{height:8px;width:100%}
+    .uni-body{padding:1.5rem}
+    .uni-head{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+    .uni-emblem{width:56px;height:56px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;font-weight:800;color:#fff}
+    .uni-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;line-height:1.3}
+    .uni-abbr{font-size:.75rem;color:var(--text-dim);margin-top:.15rem;text-transform:uppercase;letter-spacing:.06em}
+    .uni-desc{font-size:.85rem;color:var(--text-dim);line-height:1.6;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .uni-stats{display:flex;gap:1.5rem;margin-bottom:1rem;padding:.85rem;background:rgba(255,255,255,.03);border-radius:var(--radius-md)}
+    .uni-stat{display:flex;flex-direction:column;align-items:center;flex:1}
+    .uni-stat-n{font-size:1.1rem;font-weight:800;font-family:'Space Grotesk',sans-serif}
+    .uni-stat-l{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);margin-top:.1rem}
+    .uni-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem}
+    .uni-tag{padding:.2rem .6rem;border-radius:999px;font-size:.73rem;font-weight:600;background:rgba(255,255,255,.06);border:1px solid var(--border)}
+    .uni-actions{display:flex;gap:.65rem}
+
+    .detail-panel{position:fixed;top:0;right:0;bottom:0;width:520px;max-width:100vw;background:var(--bg);border-left:1px solid var(--border);z-index:300;overflow-y:auto;transform:translateX(100%);transition:.35s cubic-bezier(.34,1.56,.64,1);padding:0}
+    .detail-panel.open{transform:translateX(0)}
+    .detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:299;display:none}
+    .detail-overlay.show{display:block}
+    .detail-hero{padding:2rem;position:relative;overflow:hidden}
+    .detail-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--uni-color,rgba(59,130,246,.15)) 0%,transparent 70%);pointer-events:none}
+    .detail-close{position:absolute;top:1rem;right:1rem;background:var(--surface);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;z-index:2}
+    .detail-close:hover{background:var(--border)}
+    .detail-body{padding:1.5rem 2rem}
+    .detail-section{margin-bottom:1.5rem}
+    .detail-section-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem}
+    .contact-row{display:flex;align-items:center;gap:.65rem;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+    .contact-row:last-child{border-bottom:none}
+    .contact-row i{width:20px;color:var(--primary);opacity:.8;flex-shrink:0}
+    .prog-pill{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .7rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-md);font-size:.78rem;margin:.2rem}
+    .grading-box{padding:1rem;border-radius:var(--radius-md);border:1px solid var(--border);background:rgba(255,255,255,.02);font-size:.83rem;line-height:1.7;color:var(--text-dim)}
+    @media(max-width:600px){.uni-grid{grid-template-columns:1fr}.detail-panel{width:100%}}
+  </style>
+</head>
+<body>
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div id="toast-container"></div>
+<div class="detail-overlay" id="detailOverlay"></div>
+
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-logo">
+    <img src="/assets/img/logo-icon.svg" style="width:38px;height:38px;flex-shrink:0">
+    <div><div class="logo-text">APS</div><div class="logo-sub">Eligibility System</div></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="dashboard.html" class="nav-link"><i class="fa fa-tachometer-alt nav-icon"></i>Dashboard</a>
+    <a href="eligibility.html" class="nav-link"><i class="fa fa-check-circle nav-icon"></i>Check Eligibility</a>
+    <a href="results.html" class="nav-link"><i class="fa fa-chart-bar nav-icon"></i>Results</a>
+    <div class="nav-section-label">Explore</div>
+    <a href="universities.html" class="nav-link active"><i class="fa fa-university nav-icon"></i>Universities</a>
+    <a href="programmes.html" class="nav-link"><i class="fa fa-book-open nav-icon"></i>Programmes</a>
+    <div class="nav-section-label">Account</div>
+    <a href="profile.html" class="nav-link"><i class="fa fa-user nav-icon"></i>Profile</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-ghost w-full" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+  </div>
+</aside>
+
+<div class="layout">
+  <header class="topbar">
+    <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+    <div class="topbar-title">Universities</div>
+    <div class="topbar-actions">
+      <button class="topbar-icon" id="themeToggle"><i class="fa fa-moon"></i></button>
+      <a href="profile.html" class="topbar-avatar" id="topbarAvatar">?</a>
+    </div>
+  </header>
+  <main class="main-content">
+    <div style="margin-bottom:1.25rem;animation:fadeInUp .3s ease">
+      <div style="position:relative;max-width:480px">
+        <i class="fa fa-search" style="position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--text-dim);pointer-events:none"></i>
+        <input type="text" id="searchInput" placeholder="Search universities…"
+          style="width:100%;padding:.65rem .9rem .65rem 2.4rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);color:var(--text);font-size:.9rem;transition:.2s"
+          oninput="filterCards(this.value)">
+      </div>
+    </div>
+    <div id="uniGrid" class="uni-grid" style="animation:fadeInUp .3s .05s ease both">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-dim)">
+        <div class="spinner" style="width:2rem;height:2rem;margin:0 auto 1rem"></div>Loading…
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="detail-panel" id="detailPanel">
+  <button class="detail-close" id="detailClose"><i class="fa fa-times"></i></button>
+  <div id="detailContent"></div>
+</div>
+
+<script type="module">
+import { apiFetch, getUser, clearToken, setTheme, getTheme, showToast } from '/assets/js/api.js';
+
+let institutions = [];
+
+async function init() {
+  const theme=getTheme();document.documentElement.dataset.theme=theme;
+  document.getElementById('themeToggle').querySelector('i').className=theme==='dark'?'fa fa-sun':'fa fa-moon';
+  const user=getUser();
+  if(user){const av=document.getElementById('topbarAvatar');if(user.profile_photo_url)av.innerHTML=`<img src="${user.profile_photo_url}" style="width:32px;height:32px;border-radius:50%;object-fit:cover">`;else av.textContent=(user.full_name||user.email||'?')[0].toUpperCase();}
+  document.getElementById('menuToggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('show')});
+  document.getElementById('sidebar-overlay').addEventListener('click',()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('show')});
+  document.getElementById('themeToggle').addEventListener('click',()=>{const t=getTheme()==='dark'?'light':'dark';setTheme(t);document.documentElement.dataset.theme=t;document.getElementById('themeToggle').querySelector('i').className=t==='dark'?'fa fa-sun':'fa fa-moon'});
+  document.getElementById('logoutBtn').addEventListener('click',()=>{clearToken();window.location.href='/login.html'});
+  document.getElementById('detailClose').addEventListener('click',closeDetail);
+  document.getElementById('detailOverlay').addEventListener('click',closeDetail);
+
+  try {
+    const [instData, progData] = await Promise.all([apiFetch('/institutions'), apiFetch('/programmes?limit=300')]);
+    institutions = (instData.data||[]).map(inst => ({
+      ...inst,
+      programmes: (progData.data||[]).filter(p => p.institution_id === inst.institution_id)
+    }));
+    renderCards(institutions);
+  } catch(e) {
+    document.getElementById('uniGrid').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--danger)"><i class="fa fa-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:.75rem"></i>Failed to load universities.</div>`;
+  }
+}
+
+const COLORS = { NUL:'#3b82f6', LP:'#f59e0b', BU:'#10b981' };
+const GRADING = {
+  NUL: 'APS (Aggregate Points Score): A*=1, A=2, B=3, C=4, D=5, E=6, F=7, G=8. Best 6 subjects used. Lower total is better.',
+  LP:  'Grade-based: specific subject grade requirements (e.g. English C, Mathematics C). Each programme specifies its own minimum grades.',
+  BU:  'Points-based: A=5, B=4, C=3, D=2, E=1. Sum of best 5 subjects. Higher total is better. Minimum 18 points typically required.'
+};
+const ICONS = { NUL:'🏛️', LP:'🏗️', BU:'💼' };
+
+function renderCards(list) {
+  if(!list.length){document.getElementById('uniGrid').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-dim)">No universities found.</div>`;return;}
+  document.getElementById('uniGrid').innerHTML=list.map((inst,i)=>{
+    const color=COLORS[inst.institution_id]||'#6366f1';
+    const progCount=inst.programmes?.length||0;
+    const quals=[...new Set((inst.programmes||[]).map(p=>p.qualification_type))].filter(Boolean);
+    return `<div class="uni-card" style="animation:cardReveal .3s ${i*.08}s ease both" onclick="window._openDetail('${inst.institution_id}')">
+      <div class="uni-banner" style="background:${color}"></div>
+      <div class="uni-body">
+        <div class="uni-head">
+          <div class="uni-emblem" style="background:${color}22;color:${color};font-size:1.3rem">${ICONS[inst.institution_id]||'🏫'}</div>
+          <div><div class="uni-name">${inst.name}</div><div class="uni-abbr">${inst.institution_id} · ${inst.location||'Lesotho'}</div></div>
+        </div>
+        <div class="uni-desc">${inst.description||'A higher education institution in Lesotho.'}</div>
+        <div class="uni-stats">
+          <div class="uni-stat"><div class="uni-stat-n" style="color:${color}">${progCount}</div><div class="uni-stat-l">Programmes</div></div>
+          <div class="uni-stat"><div class="uni-stat-n" style="color:${color}">${inst.grading_system?.toUpperCase()||'—'}</div><div class="uni-stat-l">Grading</div></div>
+          ${inst.established?`<div class="uni-stat"><div class="uni-stat-n" style="color:${color}">${inst.established}</div><div class="uni-stat-l">Founded</div></div>`:''}
+        </div>
+        <div class="uni-meta">${quals.map(q=>`<span class="uni-tag">${q}</span>`).join('')}</div>
+        <div class="uni-actions">
+          <button class="btn btn-primary btn-sm" style="flex:1" onclick="event.stopPropagation();window._openDetail('${inst.institution_id}')"><i class="fa fa-info-circle"></i> Details</button>
+          <a href="programmes.html?institution=${inst.institution_id}" class="btn btn-outline btn-sm" onclick="event.stopPropagation()"><i class="fa fa-book-open"></i> Programmes</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window._openDetail = (id) => {
+  const inst = institutions.find(i => i.institution_id === id);
+  if(!inst) return;
+  const color = COLORS[inst.institution_id] || '#6366f1';
+  const progs = inst.programmes || [];
+  const quals = {};
+  progs.forEach(p => { if(!quals[p.qualification_type]) quals[p.qualification_type]=0; quals[p.qualification_type]++; });
+
+  document.getElementById('detailContent').innerHTML = `
+    <div class="detail-hero" style="--uni-color:${color}22">
+      <div style="position:relative;z-index:1">
+        <div style="font-size:3rem;margin-bottom:.75rem">${ICONS[inst.institution_id]||'🏫'}</div>
+        <div style="font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;color:${color};font-weight:700;margin-bottom:.35rem">${inst.institution_id}</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;line-height:1.3;margin-bottom:.4rem">${inst.name}</div>
+        <div style="font-size:.85rem;color:var(--text-dim)"><i class="fa fa-map-marker-alt" style="margin-right:.3rem"></i>${inst.location||'Lesotho'}</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-section">
+        <div class="detail-section-title"><i class="fa fa-info-circle"></i>About</div>
+        <p style="font-size:.88rem;line-height:1.7;color:var(--text-dim)">${inst.description||'A higher education institution in Lesotho.'}</p>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title"><i class="fa fa-phone-alt"></i>Contact</div>
+        <div class="contact-row"><i class="fa fa-envelope"></i><span>${inst.email||'N/A'}</span></div>
+        <div class="contact-row"><i class="fa fa-phone"></i><span>${inst.phone||'N/A'}</span></div>
+        <div class="contact-row"><i class="fa fa-globe"></i>${inst.website?`<a href="${inst.website}" target="_blank" style="color:var(--primary)">${inst.website}</a>`:'<span>N/A</span>'}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title"><i class="fa fa-calculator"></i>Grading System</div>
+        <div class="grading-box">${GRADING[inst.institution_id]||inst.grading_system||'See university website.'}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title"><i class="fa fa-layer-group"></i>Programmes by Qualification (${progs.length} total)</div>
+        <div style="margin-bottom:.75rem">${Object.entries(quals).map(([q,n])=>`<span class="uni-tag" style="margin:.2rem">${q}: ${n}</span>`).join('')}</div>
+        <div style="max-height:260px;overflow-y:auto">
+          ${progs.slice(0,30).map(p=>`<div class="prog-pill">${p.programme_name}</div>`).join('')}
+          ${progs.length>30?`<div style="font-size:.78rem;color:var(--text-dim);padding:.4rem;text-align:center">+ ${progs.length-30} more</div>`:''}
+        </div>
+      </div>
+      <div style="display:flex;gap:.65rem;margin-top:.5rem">
+        <a href="programmes.html?institution=${inst.institution_id}" class="btn btn-primary w-full"><i class="fa fa-book-open"></i> Browse All Programmes</a>
+        ${inst.website?`<a href="${inst.website}" target="_blank" class="btn btn-outline"><i class="fa fa-external-link-alt"></i></a>`:''}
+      </div>
+    </div>`;
+
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('detailOverlay').classList.add('show');
+};
+
+function closeDetail(){document.getElementById('detailPanel').classList.remove('open');document.getElementById('detailOverlay').classList.remove('show')}
+
+window.filterCards = (q) => {
+  const filtered = q ? institutions.filter(i=>i.name.toLowerCase().includes(q.toLowerCase())||i.institution_id.toLowerCase().includes(q.toLowerCase())) : institutions;
+  renderCards(filtered);
+};
+
+init();
+</script>
+</body>
+</html>

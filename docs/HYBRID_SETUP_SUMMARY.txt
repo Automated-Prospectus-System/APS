@@ -1,0 +1,126 @@
+# ⚡ Hybrid MySQL Setup - Quick Reference
+
+## 📋 What Changed?
+
+Your system now **requires MySQL** but **auto-initializes with 1 command**.
+
+| Before | After |
+|--------|-------|
+| MySQL optional (fallback to JSON) | MySQL is REQUIRED |
+| Setup: 10+ manual steps | Setup: 3 steps + 1 command |
+| Silent failures with JSON data | Hard fails with clear guidance |
+
+---
+
+## 🚀 Setup (3 Steps Only)
+
+### 1. Install MySQL
+```bash
+# Ubuntu/Debian
+sudo apt-get install mysql-server mysql-client
+sudo service mysql start
+
+# macOS
+brew install mysql
+brew services start mysql
+```
+
+### 2. Configure .env
+```bash
+cp .env.example .env
+# Edit .env - update DB_PASSWORD if needed
+```
+
+### 3. Initialize Database
+```bash
+python3 database/init_mysql.py
+```
+
+That's it! Database is now ready with:
+- ✅ 6 universities pre-loaded
+- ✅ 20 programs pre-loaded
+- ✅ Proper schema and indexes
+
+---
+
+## 🎯 Start Application
+
+```bash
+python3 app_mysql.py
+```
+
+Access: **http://localhost:5000**
+
+---
+
+## 📁 Files Created/Modified
+
+### NEW Files:
+- `database/init_mysql.py` - Auto-initialization script
+- `HYBRID_ARCHITECTURE.md` - Detailed explanation
+
+### MODIFIED Files:
+- `database/db_manager.py` - Now requires MySQL (fails hard if unavailable)
+- `app_mysql.py` - Better error handling with setup guidance
+- `MYSQL_SETUP.md` - Updated with hybrid quick-start
+
+### KEY FEATURES:
+- Automatic database creation
+- Automatic schema generation
+- Automatic seed data loading
+- Clear error messages with setup instructions
+
+---
+
+## 🔧 Troubleshooting
+
+| Error | Solution |
+|-------|----------|
+| "MySQL connection failed" | Run `python3 database/init_mysql.py` |
+| "Access denied" | Check .env credentials match MySQL root password |
+| "Database already exists" | That's OK! Script will reuse it |
+| "User already exists" | That's OK! Script will use existing user |
+
+---
+
+## ✅ What You're Getting
+
+**MySQL Database Structure:**
+```
+aps_system/
+├── universities (6 records)
+│   └── NUL, Lerotholi Polytechnic, LCE, Botho, Limkokwing, AUCC
+├── programs (20 records)
+│   └── Engineering, Business, Education, Medicine, Law, IT, Media, Tourism
+├── faculties
+├── subject_requirements
+├── eligibility_checks
+├── data_sources
+└── (proper foreign keys & indexes)
+```
+
+**Pre-Loaded Data:**
+- 6 Lesotho universities with contact information
+- 20 academic programs across all universities
+- Ready for production use
+
+---
+
+## 📖 Full Documentation
+
+**For details, see:**
+- `MYSQL_SETUP.md` - Complete MySQL setup guide
+- `HYBRID_ARCHITECTURE.md` - Architecture & what changed
+- `PRODUCTION_DEPLOYMENT.md` - Deployment to online servers
+
+---
+
+## 🎓 Key Points
+
+✅ **MySQL is required** (not optional anymore)
+✅ **Setup is automated** (one command does it all)
+✅ **Production-ready** (proper database structure)
+✅ **Pre-populated** (6 universities, 20 programs)
+✅ **Clear errors** (helpful if MySQL isn't available)
+
+**You can now deploy this system with confidence!**
